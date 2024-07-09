@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <label for="incentive">Incentive:</label>
         <input type="number" name="incentive" step="0.01">
     `;
-        pairContainer.insertBefore(div, pairContainer.lastElementChild);
+    pairContainer.appendChild(div);
 
     })
 
@@ -453,8 +453,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <label for="incentive">Incentive:</label>
         <input type="number" name="incentive" step="0.01">
     `;
-        pairContainer.insertBefore(div, pairContainer.lastElementChild);
-
+        // pairContainer.insertBefore(div, pairContainer.lastElementChild);
+        pairContainer.appendChild(div);
     })
 
     const removeLastExchangePairButton = document.getElementById('removeLastExchangePairButton');
@@ -485,8 +485,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <label for="incentive">Incentive:</label>
         <input type="number" name="incentive" step="0.01">
     `;
-        pairContainer.insertBefore(div, pairContainer.lastElementChild);
-
+    // pairContainer.insertAdjacentHTML('beforeend',div);
+    pairContainer.appendChild(div);
     })
 
 

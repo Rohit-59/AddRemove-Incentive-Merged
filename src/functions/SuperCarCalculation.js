@@ -3,6 +3,10 @@ module.exports = (qualifiedRM, MGADataSheet, salesExcelDataSheet, formData) => {
     qualifiedRM.forEach(element => {
         const userID = element["DSE ID"];
         element["Super Car Incentive"] = 0;
+
+         
+        if(formData.superCar.superCarIncentive !== ''){
+
         salesExcelDataSheet.forEach((data) => {
             if (data.hasOwnProperty(userID)) {
                 data[userID].forEach((record) => {
@@ -72,6 +76,9 @@ module.exports = (qualifiedRM, MGADataSheet, salesExcelDataSheet, formData) => {
                 })
             }
         })
+    }
+
+
 
     });
     // console.log(qualifiedRM)

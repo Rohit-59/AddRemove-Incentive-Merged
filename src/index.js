@@ -399,6 +399,8 @@ ipcMain.on('form-submit', (event, formData) => {
   // console.log("Form Data Input", formData);
   if (!KeyMissing) {
 
+    console.log("formData", formData);
+
     checkQualifingCondition(formData, employeeStatusDataSheet);
     newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
     qualifiedRM = PerCarFunc(qualifiedRM, formData);
