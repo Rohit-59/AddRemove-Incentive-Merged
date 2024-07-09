@@ -162,35 +162,37 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
       "Vehicle Incentive ": 0,
       "Special Car Incentive": 0,
       "Total Vehicle Incentive": 0,
+      "Total PerCar Incentive":0,
       "Super Car Incentive Qualification": 0,
-      "Super Car Incentive": 0,
+      "SpecialCar Incentive":0,
+      "Vehicle Incentive":0,
       "CDI Score": 0,
       "CDI Incentive": 0,
-      "Extended Warranty Penetration": 0,
-      "Extended Warranty Incentive": 0,
       "CCP Score": 0,
       "CCP Incentive": 0,
       "MSSF Score": 0,
       "MSSF Incentive": 0,
       "MSR Score": 0,
+      "MGA":0,
       "MSR Incentive": 0,
+      "EW Incentive":0,
       "Total Discount": 0,
-      "Discount Incentive": 0,
+      "Vehicle Incentive % Slabwise":0,
+      "Total Vehicle Incentive Amt. Slabwise":0,
       "Exchange Incentive": 0,
       "Complaint Deduction": 0,
       "MGA/Vehicle": 0,
       "MGA Incentive": 0,
       "Final Incentive": 0,
     }
+
     if (empStatus) {
       DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
 
         Discount = Discount + parseInt(sold["FINAL DISCOUNT"]);
         carObj[sold["Model Name"]]++;
-        if (DSE_NoOfSoldCarExcelDataArr[0]['DSE ID'] === "BAD018") {
-          // console.log(`carObj[sold["Model Name"]]::::`)
-          // console.log(sold["Model Name"], '::::', carObj[sold["Model Name"]])
-        }
+     
+
         if (parseInt(sold["FINAL DISCOUNT"]) > 0) {
           DiscountCount++;
         }
@@ -269,39 +271,113 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
             "Grand Total": TotalNumberCheck
           }
           qualifiedRM.push(obj)
-        } else {
-          obj = {
-            ...obj,
-            ...carObj,
-            "Status": "OLD",
-            "Focus Model Qualification": "No",
-            "Discount": Discount,
-            "AVG. Discount": Discount / DiscountCount,
-            "Exchange Status": ExchangeStatusCheck,
-            "Complaints": ComplaintCheck,
-            "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
-            "MSR": (MSRcheck / TotalNumberCheck) * 100,
-            "CCP": (CCPcheck / TotalNumberCheck) * 100,
-            "MSSF": (MSSFcheck / TotalNumberCheck) * 100,
-            "Grand Total": TotalNumberCheck
-          }
-          nonQualifiedRM.push(obj)
-        }
-      }
-    } else {
-      DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
-        carObj[sold["Model Name"]]++;
-        TotalNumberCheck++;
+        } 
+        // else {
+
+
+
+
+        //   // obj = {
+        //   //   ...obj,
+        //   //   ...carObj,
+        //   //   "Status": "OLD",
+        //   //   "Focus Model Qualification": "No",
+        //   //   "Discount": Discount,
+        //   //   "AVG. Discount": Discount / DiscountCount,
+        //   //   "Exchange Status": ExchangeStatusCheck,
+        //   //   "Complaints": ComplaintCheck,
+        //   //   "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
+        //   //   "MSR": (MSRcheck / TotalNumberCheck) * 100,
+        //   //   "CCP": (CCPcheck / TotalNumberCheck) * 100,
+        //   //   "MSSF": (MSSFcheck / TotalNumberCheck) * 100,
+        //   //   "Grand Total": TotalNumberCheck
+        //   // }
+        //   // nonQualifiedRM.push(obj)
+        // }
+      }else{
+        //unqualified data
 
         obj = {
           ...obj,
           ...carObj,
-          "Status": "NEW",
-          "Focus Model Qualification": "NO",
+          "Status": "OLD",
+          "Focus Model Qualification": "No",
+          "Discount": Discount,
+          "AVG. Discount": Discount / DiscountCount,
+          "Exchange Status": ExchangeStatusCheck,
+          "Complaints": ComplaintCheck,
+          "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
+          "MSR": (MSRcheck / TotalNumberCheck) * 100,
+          "CCP": (CCPcheck / TotalNumberCheck) * 100,
+          "MSSF": (MSSFcheck / TotalNumberCheck) * 100,
+          "MSSFCount": MSSFcheck,
+          "EWPCount": EWPCheck,
+          "MSRCount": MSRcheck,
+          "CCPCount": CCPcheck,
           "Grand Total": TotalNumberCheck
         }
+        nonQualifiedRM.push(obj)
+
+      }
+
+    } else {
+
+
+      DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
+        carObj[sold["Model Name"]]++;
+        TotalNumberCheck++;
+
+        Discount = Discount + parseInt(sold["FINAL DISCOUNT"]);
+        carObj[sold["Model Name"]]++;
+      
+        if (parseInt(sold["FINAL DISCOUNT"]) > 0) {
+          DiscountCount++;
+        }
+        if (parseInt(sold["CCP PLUS"]) > 0) {
+          CCPcheck++;
+        }
+        if (sold["Financer REMARK"] == "MSSF") {
+          MSSFcheck++;
+        }
+        if (parseInt(sold["Extended Warranty"]) > 0) {
+          EWPCheck++;
+        }
+        if (sold["Exchange Status"] == 'YES' || sold["Exchange Status"] == 'yes') {
+          ExchangeStatusCheck++;
+        }
+        if (sold["Complaint Status"] == 'YES' || sold["Complaint Status"] == 'yes') {
+          ComplaintCheck++;
+        }
+        if (sold["Autocard"] == 'YES' || sold["Autocard"] == 'yes') {
+          MSRcheck++;
+        }
+
+        
+
+       
 
       })
+      
+      obj = {
+        ...obj,
+        ...carObj,
+        "Status": "NEW",
+        "Focus Model Qualification": "NO",
+        "Discount": Discount,
+        "AVG. Discount": Discount / DiscountCount,
+        "Exchange Status": ExchangeStatusCheck,
+        "Complaints": ComplaintCheck,
+        "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
+        "MSR": (MSRcheck / TotalNumberCheck) * 100,
+        "CCP": (CCPcheck / TotalNumberCheck) * 100,
+        "MSSF": (MSSFcheck / TotalNumberCheck) * 100,
+        "MSSFCount": MSSFcheck,
+        "EWPCount": EWPCheck,
+        "MSRCount": MSRcheck,
+        "CCPCount": CCPcheck,
+        "Grand Total": TotalNumberCheck
+      }
+
       newRm.push(obj)
 
     }
@@ -315,13 +391,14 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
 
 
 function getIncentiveValue(item, key) {
-  return typeof (item[key]) === 'number' ? item[key] : 0;
+  return (typeof (item[key]) === 'number' || typeof (item[key]) == 'NaN') ? Math.round(item[key]) : 0;
 }
 
 ipcMain.on('form-submit', (event, formData) => {
 
   // console.log("Form Data Input", formData);
   if (!KeyMissing) {
+
     checkQualifingCondition(formData, employeeStatusDataSheet);
     newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
     qualifiedRM = PerCarFunc(qualifiedRM, formData);
@@ -388,7 +465,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "Total MGA": (item['TOTAL MGA']) ? item['TOTAL MGA'] : 0,
         "MGA/Vehicle": Math.round(item["MGA"]),
         "MGA Incentive": Math.round(item["MGA Incentive"]),
-        "Exchnage Count": item["Exchange Status"],
+        "Exchange Count": item["Exchange Status"],
         "Exchange Incentive": item["Exchange Incentive"],
 
         //TODO
@@ -417,10 +494,133 @@ ipcMain.on('form-submit', (event, formData) => {
       finalExcelobjOldDSE.push(obj);
     })
 
+
+    nonQualifiedRM.forEach((item) => {
+
+    
+      const grandTotal = 0;
+
+      obj = {
+        "DSE ID": item['DSE ID'],
+        "DSE Name": item['DSE Name'],
+        "BM AND TL NAME": item['BM AND TL NAME'],
+        "Status": item["Status"],
+        "Focus Model Qualification": item['Focus Model Qualification'],
+        "ALTO": item['ALTO'],
+        "ALTO K-10": item['ALTO K-10'],
+        "S-Presso": item['S-Presso'],
+        "CELERIO": item['CELERIO'],
+        "WagonR": item['WagonR'],
+        "BREZZA": item['BREZZA'],
+        "DZIRE": item['DZIRE'],
+        "EECO": item['EECO'],
+        "Ertiga": item['Ertiga'],
+        "SWIFT": item['SWIFT'],
+        "Grand Total": item["Grand Total"],
+        "Vehicle Incentive ": item["Total PerCar Incentive"],
+        "Special Car Incentive": item['SpecialCar Incentive'],
+        "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['Special Car Incentive'],
+        "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
+    "Super Car Incentive": 0,
+        "CDI Score": getIncentiveValue(item, "CDI Score"),//TODO Handle NAN values
+        "CDI Incentive": item["CDI Incentive"],
+        "Total MGA": (item['TOTAL MGA']) ? item['TOTAL MGA'] : 0,
+        "MGA/Vehicle": Math.round(item["MGA"]),
+        "MGA Incentive": Math.round(item["MGA Incentive"]),
+        "Exchange Count": item["Exchange Status"],
+        "Exchange Incentive": item["Exchange Incentive"],
+
+        //TODO
+        "Extended Warranty Penetration": Math.round(item["EW Penetration"]),
+        "Extended Warranty Count": item["EWPCount"],
+        "Extended Warranty Incentive": item["EW Incentive"],
+
+        "CCP Score": Math.round(item["CCP"]),
+        "CCP Incentive": item["CCP Incentive"],
+
+        //TODO
+        "Total Discount": item["Discount"],//TODO Handle value result is not calculating
+        "AVG. Discount": item["AVG. Discount"]?item["AVG. Discount"]:0,
+        "Vehicle Incentive % Slabwise": item["Vehicle Incentive % Slabwise"],
+        "Total Vehicle Incentive Amt. Slabwise": item["Total Vehicle Incentive Amt. Slabwise"],
+
+
+        "MSSF Score": Math.round(item["MSSF"]),
+        "MSSF Incentive": item["MSSF Incentive"],
+        "MSR Score": Math.round(item["MSR"]),
+        "MSR Incentive": item["MSR Incentive"],
+        "Complaint Deduction": item["Complaint Deduction"],//TODO
+        "Final Incentive": Math.round(grandTotal),
+
+      }
+      finalExcelobjOldDSE.push(obj);
+    })
+
+   
+    newRm.forEach((item) => {
+
+
+      obj = {
+        "DSE ID": item['DSE ID'],
+        "DSE Name": item['DSE Name'],
+        "BM AND TL NAME": item['BM AND TL NAME'],
+        "Status": item["Status"],
+        "Focus Model Qualification": item['Focus Model Qualification'],
+        "ALTO": item['ALTO'],
+        "ALTO K-10": item['ALTO K-10'],
+        "S-Presso": item['S-Presso'],
+        "CELERIO": item['CELERIO'],
+        "WagonR": item['WagonR'],
+        "BREZZA": item['BREZZA'],
+        "DZIRE": item['DZIRE'],
+        "EECO": item['EECO'],
+        "Ertiga": item['Ertiga'],
+        "SWIFT": item['SWIFT'],
+        "Grand Total": item["Grand Total"],
+        "Vehicle Incentive ": item["Total PerCar Incentive"],
+        "Special Car Incentive": item['SpecialCar Incentive'],
+        "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['Special Car Incentive'],
+        "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
+        "Super Car Incentive": 0,
+        "CDI Score": getIncentiveValue(item, "CDI Score"),//TODO Handle NAN values
+        "CDI Incentive": item["CDI Incentive"],
+        "Total MGA": (item['TOTAL MGA']) ? item['TOTAL MGA'] : 0,
+        "MGA/Vehicle": Math.round(item["MGA"]),
+        "MGA Incentive": Math.round(item["MGA Incentive"]),
+        "Exchange Count": item["Exchange Status"],
+        "Exchange Incentive": item["Exchange Incentive"],
+
+        //TODO
+        "Extended Warranty Penetration": Math.round(item["EW Penetration"]),
+        "Extended Warranty Count": item["EWPCount"],
+        "Extended Warranty Incentive": item["EW Incentive"],
+
+        "CCP Score": Math.round(item["CCP"]),
+        "CCP Incentive": item["CCP Incentive"],
+
+        //TODO
+        "Total Discount": item["Discount"],//TODO Handle value result is not calculating
+        "AVG. Discount": item["AVG. Discount"]?item["AVG. Discount"]:0,
+        "Vehicle Incentive % Slabwise": item["Vehicle Incentive % Slabwise"],
+        "Total Vehicle Incentive Amt. Slabwise": item["Total Vehicle Incentive Amt. Slabwise"],
+
+
+        "MSSF Score": Math.round(item["MSSF"]),
+        "MSSF Incentive": item["MSSF Incentive"],
+        "MSR Score": Math.round(item["MSR"]),
+        "MSR Incentive": item["MSR Incentive"],
+        "Complaint Deduction": item["Complaint Deduction"],//TODO
+        "Final Incentive": item["Final Incentive"],
+
+      }
+      finalExcelobjOldDSE.push(obj);
+    })
+
+     
     // finalExcelobjOldDSE = {...nonQualifiedRM,...newDSEIncentiveDataSheet,}
 
 
-    finalExcelobjOldDSE = [...finalExcelobjOldDSE, ...nonQualifiedRM, ...newRm];
+    // finalExcelobjOldDSE = [...finalExcelobjOldDSE, ...nonQualifiedRM, ...newRm];
     // console.log("finalExcelobjOldDSE", finalExcelobjOldDSE);
     // console.log("nonQualifiedRM", nonQualifiedRM);
 

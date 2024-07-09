@@ -37,6 +37,7 @@ module.exports = (qualifiedRM, MGAdata, formData) => {
         } else {
             console.error(`No matching MGA data found for DSE ID: ${element["DSE ID"]}`);
             element["MGA"] = 0;
+            element["TOTAL MGA"] = 0;
             element["MGA Incentive"] = 0;
         }
 
