@@ -434,9 +434,9 @@ ipcMain.on('form-submit', (event, formData) => {
         getIncentiveValue(item, "CCP Incentive") +
         getIncentiveValue(item, "MSSF Incentive") +
         getIncentiveValue(item, "MSR Incentive") +
-        getIncentiveValue(item, "Discount Incentive") +
+        // getIncentiveValue(item, "Discount Incentive") +
         getIncentiveValue(item, "Exchange Incentive") +
-        getIncentiveValue(item, "Vehicle Incentive")
+        // getIncentiveValue(item, "Vehicle Incentive")
         getIncentiveValue(item, "Complaint Deduction") +
         getIncentiveValue(item, "Super Car Incentive") +
         getIncentiveValue(item, "MGA Incentive");
@@ -459,9 +459,9 @@ ipcMain.on('form-submit', (event, formData) => {
         "Ertiga": item['Ertiga'],
         "SWIFT": item['SWIFT'],
         "Grand Total": item["Grand Total"],
-        "Vehicle Incentive": item["Total PerCar Incentive"],
+        "Vehicle Incentive": item["Total PerCar Incentive"] + item["PerModel Incentive"],
         "Special Car Incentive": item['SpecialCar Incentive'],
-        "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['SpecialCar Incentive'],
+        "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['SpecialCar Incentive'] + item["TotalModelIncentive"],
         "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
         "Super Car Incentive": getIncentiveValue(item, "Super Car Incentive"),
         "CDI Score": getIncentiveValue(item, "CDI Score"),//TODO Handle NAN values
@@ -493,6 +493,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "MSSF Incentive": item["MSSF Incentive"],
         "MSR Score": Math.round(item["MSR"]),
         "MSR Incentive": item["MSR Incentive"],
+        "Complaints": item["Complaints"],
         "Complaint Deduction": item["Complaint Deduction"],//TODO
         "Final Incentive": Math.round(grandTotal),
 
@@ -557,6 +558,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "MSSF Incentive": item["MSSF Incentive"],
         "MSR Score": Math.round(item["MSR"]),
         "MSR Incentive": item["MSR Incentive"],
+        "Complaints": item["Complaints"],
         "Complaint Deduction": item["Complaint Deduction"],//TODO
         "Final Incentive": Math.round(grandTotal),
 
@@ -619,6 +621,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "MSSF Incentive": item["MSSF Incentive"],
         "MSR Score": Math.round(item["MSR"]),
         "MSR Incentive": item["MSR Incentive"],
+        "Complaints": item["Complaints"],
         "Complaint Deduction": item["Complaint Deduction"],//TODO
         "Final Incentive": item["Final Incentive"],
 
