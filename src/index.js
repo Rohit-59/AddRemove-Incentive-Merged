@@ -428,7 +428,7 @@ ipcMain.on('form-submit', (event, formData) => {
       // }
       const grandTotal =
         getIncentiveValue(item, "Total Vehicle Incentive Amt. Slabwise") +
-        getIncentiveValue(item, "SpecialCar Incentive") +
+        // getIncentiveValue(item, "SpecialCar Incentive") +
         getIncentiveValue(item, "CDI Incentive") +
         getIncentiveValue(item, "EW Incentive") +
         getIncentiveValue(item, "CCP Incentive") +
@@ -528,7 +528,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "Special Car Incentive": item['SpecialCar Incentive'],
         "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['Special Car Incentive'],
         "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
-    "Super Car Incentive": 0,
+         "Super Car Incentive": 0,
         "CDI Score": getIncentiveValue(item, "CDI Score"),//TODO Handle NAN values
         "CDI Incentive": item["CDI Incentive"],
         "Total MGA": (item['TOTAL MGA']) ? item['TOTAL MGA'] : 0,
