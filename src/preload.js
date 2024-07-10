@@ -10,10 +10,10 @@ let MSSFInputs = [];
 let DiscountInputs = [];
 let ComplaintInputs = [];
 let MSRinputs = [];
-
+let NumberPairs = [];
 let pairCount = 1;
 let specialCarPairCount = 1;
-
+let newDSEInput = [];
 
 
 
@@ -268,6 +268,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById('myForm');
 
 
+    
+
+
     // For CDI Range
     const inputTemplates = {
         greater: `
@@ -435,6 +438,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     })
+
+
+    //For ModelWise Car Number Pair
+
+    const addNumberPairButton = document.getElementById('addNumberPairButton');
+    addNumberPairButton.addEventListener('click', () => {
+
+        const pairContainer = document.getElementById('Number-pairs-container');
+        const div = document.createElement('div');
+        div.className = 'Number-pair-container';
+
+        div.innerHTML = `
+        <label for="vehicleNumber">Number of Cars:</label>
+        <input type="number" name="vehicleNumber">
+        <label for="incentive">Incentive(%):</label>
+        <input type="number" name="incentive" step="any">
+    `;
+    pairContainer.appendChild(div);
+
+    })
+
+    const removeNumberPairButton = document.getElementById('removeNumberPairButton');
+    removeNumberPairButton.addEventListener('click',()=>{
+       
+        var container = document.getElementById('Number-pairs-container');
+    var lastChild = container.lastElementChild;
+    if (lastChild) {
+        container.removeChild(lastChild);
+    }
+
+
+    })
+
 
 
 
@@ -704,11 +740,20 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         const superCar = {
             superCarCriteria: formData.getAll('superCarCheck'),
-            superCarIncentive: formData.get('SuperCarIncentive')
+            superCarIncentive: formData.get('SuperCarIncentive'),
+            superCarValues: {
+                MGA:formData.get('MGASaleValue'),
+                Discount:formData.get('DiscountValue')
+            }
         };
 
-        const newDSEInput = [];
-        newDSEInput[0] = formData.get('newDSEInput');
+        
+       let newDSEIncentiveInput = formData.get('newDSEInput');
+       let newDSEMcarsInput = formData.get('newDSEMcarsInput');
+       const newDSEdata = {
+        incentive:newDSEIncentiveInput,
+        minCars:newDSEMcarsInput
+       }
 
         const cdiIncentives = [...document.querySelectorAll('.cdiInput')].map(div => {
             let type;
@@ -750,6 +795,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
             carPairs.push(pair);
         }
+
+    
+
+        const NumberpairContainers = document.getElementsByClassName('Number-pair-container');
+        for (let i = 0; i < NumberpairContainers.length; i++) {
+            const NumberpairContainer = NumberpairContainers[i];
+            const NumberInput = NumberpairContainer.querySelector('input[name="vehicleNumber"]');
+            const incentiveInput = NumberpairContainer.querySelector('input[name="incentive"]');
+
+
+            const NumberPair = {
+                VehicleNumber: NumberInput.value,
+                incentive: incentiveInput.value
+            };
+
+            NumberPairs.push(NumberPair);
+        }
+
+
+
+
 
 
 
@@ -933,7 +999,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         finalObj["QC"] = qcData;
-        finalObj["newDSEInput"] = newDSEInput;
+        // finalObj["newDSEInput"] = newDSEInput;
+        finalObj["newDSEInput"] =   newDSEdata;
         finalObj["superCar"] = superCar;
         finalObj["CDI"] = cdiIncentives;
         finalObj["carIncentive"] = carPairs;
@@ -944,6 +1011,7 @@ document.addEventListener("DOMContentLoaded", function () {
         finalObj["MSR"] = MSRinputs;
         finalObj["Extended Warranty"] = EWInputs;
         finalObj["PerModelIncentive"] = perModelCarPairs;
+        finalObj["PerModelNumberCarIncentive"] = NumberPairs;
         finalObj["SpecialCarIncentive"] = specialCarPairs;
         finalObj["CCP"] = CCPInputs;
         finalObj["MSSF"] = MSSFInputs;

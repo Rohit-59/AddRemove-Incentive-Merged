@@ -55,6 +55,7 @@ const PerCarFunc = require('./functions/PerCarCalculation');
 const MSRFunc = require('./functions/MSRCalculation');
 const SuperCarFunc = require('./functions/SuperCarCalculation');
 const NewDSEincentiveCalculation = require('./functions/NewDSEincentiveCalculation');
+const ModelWiseNumberFunc = require('./functions/ModelNumberWiseCalculation')
 
 // Global Variables
 let MGAdata = [];
@@ -164,6 +165,8 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
       "Total Vehicle Incentive": 0,
       "Total PerCar Incentive":0,
       "Super Car Incentive Qualification": 0,
+      "TotalModelIncentive":0,
+      "PerModel Incentive":0,
       "SpecialCar Incentive":0,
       "Vehicle Incentive":0,
       "CDI Score": 0,
@@ -256,8 +259,8 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
             ...carObj,
             "Status": "OLD",
             "Focus Model Qualification": "YES",
-            "Discount": Discount,
-            "AVG. Discount": Discount / DiscountCount,
+            "Discount": Discount > 0 ? Discount : 0,
+            "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
             "Exchange Status": ExchangeStatusCheck,
             "Complaints": ComplaintCheck,
             "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
@@ -302,8 +305,8 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
           ...carObj,
           "Status": "OLD",
           "Focus Model Qualification": "No",
-          "Discount": Discount,
-          "AVG. Discount": Discount / DiscountCount,
+          "Discount": Discount > 0 ? Discount : 0,
+          "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
           "Exchange Status": ExchangeStatusCheck,
           "Complaints": ComplaintCheck,
           "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
@@ -324,7 +327,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
 
 
       DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
-        carObj[sold["Model Name"]]++;
+
         TotalNumberCheck++;
 
         Discount = Discount + parseInt(sold["FINAL DISCOUNT"]);
@@ -352,9 +355,6 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
           MSRcheck++;
         }
 
-        
-
-       
 
       })
       
@@ -363,8 +363,8 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
         ...carObj,
         "Status": "NEW",
         "Focus Model Qualification": "NO",
-        "Discount": Discount,
-        "AVG. Discount": Discount / DiscountCount,
+        "Discount": Discount > 0 ? Discount : 0,
+        "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
         "Exchange Status": ExchangeStatusCheck,
         "Complaints": ComplaintCheck,
         "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
@@ -406,6 +406,7 @@ ipcMain.on('form-submit', (event, formData) => {
     qualifiedRM = PerCarFunc(qualifiedRM, formData);
     qualifiedRM = SpecialCarFunc(qualifiedRM, formData);
     qualifiedRM = PerModelCarFunc(qualifiedRM, formData);//TODO
+    qualifiedRM = ModelWiseNumberFunc(qualifiedRM,formData);
     qualifiedRM = CDIfunc(qualifiedRM, CDIdata, formData);//TODO
     qualifiedRM = EWfunc(qualifiedRM, formData);
     qualifiedRM = CCPfunc(qualifiedRM, formData);
@@ -428,7 +429,6 @@ ipcMain.on('form-submit', (event, formData) => {
       const grandTotal =
         getIncentiveValue(item, "Total Vehicle Incentive Amt. Slabwise") +
         getIncentiveValue(item, "SpecialCar Incentive") +
-        getIncentiveValue(item, "PerModel Incentive") +
         getIncentiveValue(item, "CDI Incentive") +
         getIncentiveValue(item, "EW Incentive") +
         getIncentiveValue(item, "CCP Incentive") +
@@ -436,9 +436,11 @@ ipcMain.on('form-submit', (event, formData) => {
         getIncentiveValue(item, "MSR Incentive") +
         getIncentiveValue(item, "Discount Incentive") +
         getIncentiveValue(item, "Exchange Incentive") +
+        getIncentiveValue(item, "Vehicle Incentive")
         getIncentiveValue(item, "Complaint Deduction") +
         getIncentiveValue(item, "Super Car Incentive") +
         getIncentiveValue(item, "MGA Incentive");
+        // getIncentiveValue(item, "TotalModelIncentive"); 
 
       obj = {
         "DSE ID": item['DSE ID'],
@@ -457,7 +459,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "Ertiga": item['Ertiga'],
         "SWIFT": item['SWIFT'],
         "Grand Total": item["Grand Total"],
-        "Vehicle Incentive ": item["Total PerCar Incentive"],
+        "Vehicle Incentive": item["Total PerCar Incentive"],
         "Special Car Incentive": item['SpecialCar Incentive'],
         "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['SpecialCar Incentive'],
         "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
@@ -469,6 +471,8 @@ ipcMain.on('form-submit', (event, formData) => {
         "MGA Incentive": Math.round(item["MGA Incentive"]),
         "Exchange Count": item["Exchange Status"],
         "Exchange Incentive": item["Exchange Incentive"],
+        "PerModel Incentive": item["PerModel Incentive"],
+        "Model Incentive" : item["TotalModelIncentive"],
 
         //TODO
         "Extended Warranty Penetration": Math.round(item["EW Penetration"]),
@@ -519,7 +523,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "Ertiga": item['Ertiga'],
         "SWIFT": item['SWIFT'],
         "Grand Total": item["Grand Total"],
-        "Vehicle Incentive ": item["Total PerCar Incentive"],
+        "Vehicle Incentive": item["Total PerCar Incentive"],
         "Special Car Incentive": item['SpecialCar Incentive'],
         "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['Special Car Incentive'],
         "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
@@ -531,6 +535,8 @@ ipcMain.on('form-submit', (event, formData) => {
         "MGA Incentive": Math.round(item["MGA Incentive"]),
         "Exchange Count": item["Exchange Status"],
         "Exchange Incentive": item["Exchange Incentive"],
+        "Model Incentive" : item["TotalModelIncentive"],
+        "PerModel Incentive": item["PerModel Incentive"],
 
         //TODO
         "Extended Warranty Penetration": Math.round(item["EW Penetration"]),
@@ -579,9 +585,9 @@ ipcMain.on('form-submit', (event, formData) => {
         "Ertiga": item['Ertiga'],
         "SWIFT": item['SWIFT'],
         "Grand Total": item["Grand Total"],
-        "Vehicle Incentive ": item["Total PerCar Incentive"],
+        "Vehicle Incentive": item["Vehicle Incentive"],
         "Special Car Incentive": item['SpecialCar Incentive'],
-        "Total Vehicle Incentive": item["Total PerCar Incentive"] + item['Special Car Incentive'],
+        "Total Vehicle Incentive": item["Vehicle Incentive"],
         "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
         "Super Car Incentive": 0,
         "CDI Score": getIncentiveValue(item, "CDI Score"),//TODO Handle NAN values
@@ -591,6 +597,8 @@ ipcMain.on('form-submit', (event, formData) => {
         "MGA Incentive": Math.round(item["MGA Incentive"]),
         "Exchange Count": item["Exchange Status"],
         "Exchange Incentive": item["Exchange Incentive"],
+        "Model Incentive" : item["TotalModelIncentive"],
+        "PerModel Incentive": item["PerModel Incentive"],
 
         //TODO
         "Extended Warranty Penetration": Math.round(item["EW Penetration"]),

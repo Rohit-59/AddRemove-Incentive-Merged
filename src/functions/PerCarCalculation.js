@@ -1,5 +1,7 @@
 module.exports = (qualifiedRM, formData) => {
   qualifiedRM.forEach((record) => {
+
+    
     let soldCar = parseInt(record["Grand Total"]);
     let perCarIncentive = 0;
     // Find the appropriate incentive based on the exact number of cars sold

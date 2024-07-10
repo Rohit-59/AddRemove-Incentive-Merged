@@ -6,7 +6,7 @@ module.exports = (qualifiedRM, formData) => {
         let userValue = element["AVG. Discount"];
         // console.log("userValue");
         // console.log(userValue);
-        const TotalVehicleIncentive = element["Total PerCar Incentive"] + element['SpecialCar Incentive']
+        const TotalVehicleIncentive = element["Total PerCar Incentive"] + element['SpecialCar Incentive'] + element["TotalModelIncentive"];
         for (const incentive of formData.DiscountInputs) {
             //soon scenario
             if (incentive.max === null) {
@@ -17,7 +17,7 @@ module.exports = (qualifiedRM, formData) => {
                     break;
                 }
             } else {
-                if (userValue >= incentive.min && userValue < incentive.max) {
+                if (userValue >= incentive.min && userValue <= incentive.max) {
                     element["Vehicle Incentive % Slabwise"] = incentive.incentive;
                     element["Total Vehicle Incentive Amt. Slabwise"] = (TotalVehicleIncentive * incentive.incentive) / 100;
                     break;
