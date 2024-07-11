@@ -24,8 +24,17 @@ module.exports =  (qualifiedRM, formData) => {
     qualifiedRM.forEach(element => {
        
         let userEW = element["EW Penetration"];
+
+        //Setting default incentive to 0
         element["EW Incentive"] = 0;
+
+
+        // DSE's EW Count
         const noOfCarSoldEW = element["EWPCount"];
+
+
+
+         //Loop to check if Extended Warranty of DSE falls in the range of EW inputs given by user and calculate its incentive 
       
         for (let i = 0; i < formData["Extended Warranty"].length; i++) {
             const condition = formData["Extended Warranty"][i];

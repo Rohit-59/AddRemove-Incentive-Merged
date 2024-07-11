@@ -40,7 +40,7 @@ const createWindow = () => {
   // mainWindow.webContents.openDevTools();
 };
 
-//Separate Calculation Functions
+//Separate Calculation Functions for Each type incentive
 const MGAfunc = require('./functions/MGACalculation');
 const CDIfunc = require('./functions/CDICalculation');
 const EWfunc = require('./functions/EWCalculation');
@@ -68,7 +68,7 @@ let newRm = [];
 let newDSEIncentiveDataSheet = [];
 let KeyMissing = false;
 
-//////////////////////////////////////////////////////
+// Function to check if the Key value of CDI/MGA and DSE Excel data is in correct form or not
 function checkKeys(array, keys) {
   const firstObject = array[0];
   const missingKeys = [];
@@ -81,6 +81,8 @@ function checkKeys(array, keys) {
   return missingKeys.length > 0 ? missingKeys : null;
 }
 
+
+// function to remove whiteSpaces from DSE Excel Data Column name or keys
 function transformKeys(array) {
   return array.map(obj => {
     let newObj = {};
@@ -95,7 +97,7 @@ function transformKeys(array) {
 }
 
 
-
+// function to remove whiteSpaces from DSE Excel Data
 function trimValuesArray(arr) {
   return arr.map(obj => {
     const trimmedObj = {};
@@ -110,9 +112,11 @@ function trimValuesArray(arr) {
   });
 }
 
-//////////////////////////////////////////////////
+
+// Function to check if the DSE is qualifying based on the FormData inputs
+
 const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
-  // console.log("checkQualifingCondition");
+
   salesExcelDataSheet.forEach((item) => {
     let numberCheck = 0;
     let Discount = 0;
@@ -236,7 +240,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
         }
       })
 
-      //for EW and auto card check
+      //for EW, auto card, CCP,MSSF,Discount,MGA,Exchange,Complaint check
       if (numberCheck >= formData.QC.numOfCars) {
 
 
@@ -363,28 +367,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
           }
           qualifiedRM.push(obj)
         } 
-        // else {
 
-
-
-
-        //   // obj = {
-        //   //   ...obj,
-        //   //   ...carObj,
-        //   //   "Status": "OLD",
-        //   //   "Focus Model Qualification": "No",
-        //   //   "Discount": Discount,
-        //   //   "AVG. Discount": Discount / DiscountCount,
-        //   //   "Exchange Status": ExchangeStatusCheck,
-        //   //   "Complaints": ComplaintCheck,
-        //   //   "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
-        //   //   "MSR": (MSRcheck / TotalNumberCheck) * 100,
-        //   //   "CCP": (CCPcheck / TotalNumberCheck) * 100,
-        //   //   "MSSF": (MSSFcheck / TotalNumberCheck) * 100,
-        //   //   "Grand Total": TotalNumberCheck
-        //   // }
-        //   // nonQualifiedRM.push(obj)
-        // }
       }else{
         //unqualified data
 
@@ -412,7 +395,8 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
       }
 
     } else {
-
+    
+      //New DSE data
 
       DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
 
@@ -471,8 +455,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
     }
 
   })
-  // console.log("qualifiedRM : ", qualifiedRM)
-  // console.log("nonQualifiedRM : ", nonQualifiedRM)
+ 
 
 
 }
@@ -488,6 +471,10 @@ ipcMain.on('form-submit', (event, formData) => {
   if (!KeyMissing) {
 
     console.log("formData", formData);
+
+
+
+    // Calling Function to Check Qualification and Calculate eacch incentive of DSE
 
     checkQualifingCondition(formData, employeeStatusDataSheet);
     newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
@@ -505,9 +492,16 @@ ipcMain.on('form-submit', (event, formData) => {
     qualifiedRM = ComplaintFunc(qualifiedRM, formData);
     qualifiedRM = MGAfunc(qualifiedRM, MGAdata, formData);
     qualifiedRM = SuperCarFunc(qualifiedRM, MGAdata, salesExcelDataSheet, formData)
-    // console.log("final qualifiedRM ::");
-    // console.log(qualifiedRM);
+   
+
+
+
+    // Final Object
     let finalExcelobjOldDSE = [];
+
+
+
+// Pushing qualified OLD DSE objects to Final Object
 
     qualifiedRM.forEach((item) => {
 
@@ -590,6 +584,8 @@ ipcMain.on('form-submit', (event, formData) => {
     })
 
 
+    // Pushing Nonqualified OLD DSE objects to Final Object
+
     nonQualifiedRM.forEach((item) => {
 
     
@@ -654,6 +650,9 @@ ipcMain.on('form-submit', (event, formData) => {
       finalExcelobjOldDSE.push(obj);
     })
 
+
+
+    // Pushing New DSE objects to Final Object
    
     newRm.forEach((item) => {
 
@@ -717,20 +716,17 @@ ipcMain.on('form-submit', (event, formData) => {
       finalExcelobjOldDSE.push(obj);
     })
 
-     
-    // finalExcelobjOldDSE = {...nonQualifiedRM,...newDSEIncentiveDataSheet,}
 
-
-    // finalExcelobjOldDSE = [...finalExcelobjOldDSE, ...nonQualifiedRM, ...newRm];
-    // console.log("finalExcelobjOldDSE", finalExcelobjOldDSE);
-    // console.log("nonQualifiedRM", nonQualifiedRM);
 
 
     event.reply("dataForExcel", finalExcelobjOldDSE);
+
     // event.reply("newDSEIncentiveDataSheet", newDSEIncentiveDataSheet);
     const oldDSE = "oldDSE";
+
     // const newDSE = "newDSE";
     creatExcel(finalExcelobjOldDSE, oldDSE);
+
     // creatExcel(newDSEIncentiveDataSheet, newDSE);
 
     MGAdata = [];
@@ -824,8 +820,8 @@ ipcMain.on('file-selected-salesExcel', (event, path) => {
   const keysToCheckInMGAexcel = ["DSE NAME", "ID", "MGA/VEH", "TOTAL MGA SALE DDL", "MGA SALE FOR ARGRIMENT"];
 
   const missingKeyForMGAExcel = checkKeys(MGAsheetData, keysToCheckInMGAexcel);
-  // console.log("missingKeyForMGAExcel")
-  // console.log(missingKeyForMGAExcel)
+  
+
   if (missingKeyForMGAExcel) {
     KeyMissing = true;
     event.reply("formateAlertMGAExcel", missingKeyForMGAExcel);
@@ -855,8 +851,8 @@ ipcMain.on('file-selected-salesExcel', (event, path) => {
   const keysToCheckInStatusexcel = ["DSE", "STATUS", "DSE ID"];
 
   const missingKeyForStatusExcel = checkKeys(employeeStatusDataSheet, keysToCheckInStatusexcel);
-  // console.log("missingKeyForStatusExcel")
-  // console.log(missingKeyForStatusExcel)
+ 
+
   if (missingKeyForStatusExcel) {
     KeyMissing = true;
     event.reply("formateAlertStatusExcel", missingKeyForStatusExcel);

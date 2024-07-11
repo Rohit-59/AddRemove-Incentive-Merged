@@ -8,7 +8,7 @@ module.exports = (qualifiedRM, formData) => {
         let soldCar = parseInt(record["Grand Total"]);
         let IncentivePercentage = 0;
 
-      // Find the appropriate incentive based on the exact number of cars sold
+      // Find the appropriate incentive based on the exact number of cars sold for modelWise Calculation
       formData.PerModelNumberCarIncentive.forEach((incentive) => {
         if (soldCar == parseInt(incentive.VehicleNumber)) {
             IncentivePercentage = parseInt(incentive.incentive);

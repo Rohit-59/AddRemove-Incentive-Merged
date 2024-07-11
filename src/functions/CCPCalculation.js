@@ -20,9 +20,20 @@ module.exports =  (qualifiedRM, formData) => {
    
     qualifiedRM.forEach(element => {
 
+
+      //Set default value of CCP Incentive to 0
         element["CCP Incentive"] = 0;
+
+      // Variable to store CCP Penetration of DSE
         let userCCP = element["CCP"];
+
+     // Variable to store CCP count of DSE
         const noOfCarSoldCCP = element["CCPCount"];
+
+
+
+        //Loop to check if CCP of DSE falls in the range of CCP inputs given by user and calculate its incentive 
+
 
         for (let i = 0; i < formData["CCP"].length; i++) {
             const condition = formData["CCP"][i];

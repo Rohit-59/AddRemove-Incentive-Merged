@@ -20,9 +20,16 @@ module.exports =  (qualifiedRM, formData) => {
    
     qualifiedRM.forEach(element => {
 
+      //deafault set zero
         element["MSR Incentive"] = 0;
+
         let userMSR = element["MSR"];
+
         const noOfCarSoldMSR = element["MSRCount"];
+
+
+
+         //Loop to check if MSR/Autocard of DSE falls in the range of MSR/Autocard inputs given by user and calculate its incentive 
 
         for (let i = 0; i < formData["MSR"].length; i++) {
             const condition = formData["MSR"][i];

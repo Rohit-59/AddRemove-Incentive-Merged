@@ -7,11 +7,18 @@ module.exports = (qualifiedRM, CDIdata, formData) => {
 
     qualifiedRM.forEach(element => {
 
+        //Check if DSE ID exist in the MGA data based on that we can go further
         const result = searchByID(CDIdata, element["DSE ID"]);
+
+
+
         if (result) {
             element["CDI Score"] = result["CDI"];
             const cdiScore = parseFloat(element["CDI Score"]);
             let CDIIncentive = 0;
+
+            //Loop to check if CDI score of DSE falls in the range of CDI inputs given by user and calculate its incentive 
+
             for (const incentive of formData.CDI) {
                 if (
                     (incentive.type === 'greater' && cdiScore >= incentive.cdiValue) ||
@@ -23,6 +30,7 @@ module.exports = (qualifiedRM, CDIdata, formData) => {
             }
             element["CDI Incentive"] = CDIIncentive;
         } else {
+            //If no matching DSE found in DSE data then set default value zero
             element["CDI Score"] = "-";
             element["CDI Incentive"] = 0;
         }

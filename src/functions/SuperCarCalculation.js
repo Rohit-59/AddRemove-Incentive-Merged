@@ -44,7 +44,7 @@ module.exports = (qualifiedRM, MGADataSheet, salesExcelDataSheet, formData) => {
                                 mappedObject.insurance = true;
                             }
                         }
-
+ 
                         //ccp check and update 
                         if (formData.superCar.superCarCriteria.includes("CCP")) {
                             if (record["CCP PLUS"] > 0) {

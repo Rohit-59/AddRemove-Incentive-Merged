@@ -9,6 +9,9 @@ element["PerModel Incentive"] = 0;
 
 let perModelIncentive = 0;
 
+      // Find the appropriate incentive based on the exact model of cars sold for modelWise Calculation
+
+
 for (const model in formData.PerModelIncentive) {
     if (element.hasOwnProperty(model) && element[model] > 0) {
         perModelIncentive += element[model] * formData.PerModelIncentive[model];

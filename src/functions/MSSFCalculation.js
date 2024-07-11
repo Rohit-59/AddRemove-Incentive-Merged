@@ -20,11 +20,20 @@ module.exports =  (qualifiedRM, formData) => {
    
     qualifiedRM.forEach(element => {
 
+      //Set default value
         element["MSSF Incentive"] = 0;
+        
+       //DSE MSSF Penetration 
         let userMSSF = element["MSSF"];
+
+
+    // DSE MSSF Count
         const noOfCarSoldMSSF = element["MSSFCount"];
-// console.log("noOfCarSoldMSSF");
-// console.log(noOfCarSoldMSSF);
+
+
+
+ //Loop to check if MSSF of DSE falls in the range of MSSF inputs given by user and calculate its incentive 
+
         for (let i = 0; i < formData["MSSF"].length; i++) {
             const condition = formData["MSSF"][i];
             if (condition.type === 'less' && userMSSF <= condition.value) {

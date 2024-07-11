@@ -8,7 +8,7 @@ module.exports = (qualifiedRM, formData) => {
     formData.carIncentive.forEach((incentive) => {
       if (soldCar == parseInt(incentive.cars)) {
         perCarIncentive = parseInt(incentive.incentive);
-        // console.log("perCarIncentive ::::::::::::::::::",perCarIncentive);
+       
       }
     });
     const lastIncentive = formData.carIncentive[formData.carIncentive.length - 1].incentive;
@@ -28,11 +28,9 @@ module.exports = (qualifiedRM, formData) => {
 
     // Add the incentive to the record
     // record["Per Car Incentive"] = perCarIncentive;
-    // console.log("formData.SpecialCarIncentive");
-    // console.log(formData.SpecialCarIncentive);
-    // 6-2 * 2500 = 10000
+
     record["Total PerCar Incentive"] = Math.abs(soldCar - specialCarCount) * perCarIncentive;
-    // record["Total Vehicle Incentive"] = record["Total PerCar Incentive"]  + record["Total PerCar Incentive"] ;
+    
   });
   return qualifiedRM;
 }
