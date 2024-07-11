@@ -52,7 +52,7 @@
       <div class="qcContainer">
         <h2 style="color: #1F1A17;">Qualifying Condition</h2>
         <div id="qcInputs" style="display: flex; padding: 20px; flex-direction: column; margin-bottom: 20px;">
-          <div style=" display: flex;   justify-content: space-evenly;">
+          <div class="QCInput" style=" display: flex;   justify-content: space-evenly;">
             <label for="carSelection" style="color: #1F1A17;">Select Focus Model Cars:</label>
             <div id="carSelection">
               <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="ALTO"> ALTO</label>
@@ -67,18 +67,115 @@
               <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="SWIFT"> SWIFT</label>
             </div>
           </div>
-          <div style=" display: flex;  justify-content: space-evenly;">
+
+          <div class="QCInput" style=" display: flex;  justify-content: space-between;">
             <label for="numCars" style="color: #1F1A17;">Number of Cars:</label>
             <input type="number" id="numCars" name="numCars">
           </div>
-          <div style=" display: flex;  justify-content: space-evenly;">
+
+     
+     
+          <div class="QCInput" style=" display: flex; align-items: center;  justify-content: space-between;">
             <label for="autocard" style="color: #1F1A17;">AutoCard:</label>
-            <input type="checkbox" id="autocard" name="autocard" value="yes">
+            <input type="checkbox" id="autocard" name="autocard" value="yes" onchange="
+            var divToToggle = document.getElementById('autoValue');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+
+            <div id="autoValue" class="autocardPercent-container" style=" display: flex; align-items: center;">
+              <label for="autocardPercent" style="color: #1F1A17;">AutoCard Percent:</label>
+              <input type="number" id="autocardPercent" name="autocardPercent" value=100 disabled>
+            </div>
+
           </div>
-          <div style=" display: flex;  justify-content: space-evenly;">
+
+
+          <div class="QCInput" style=" display: flex;  align-items: center;  justify-content: space-between;">
             <label for="ew" style="color: #1F1A17;">EW:</label>
-            <input type="checkbox" id="ew" name="ew" value="yes">
+            <input type="checkbox" id="ew" name="ew" value="yes" onchange="
+            var divToToggle = document.getElementById('eWAmnt');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="eWAmnt" class="ewdPercent-container" style=" display: flex; align-items: center;">
+              <label for="ewdPercent" style="color: #1F1A17;">EW Percent:</label>
+              <input type="number" id="ewdPercent" name="ewdPercent" value=100 disabled>
+            </div>
           </div>
+
+          <!-- Test -->
+         
+
+
+          <div class="QCInput" style=" display: flex; align-items: center;  justify-content: space-between;">
+            <label for="CCP" style="color: #1F1A17;">CCP: </label>
+            <input type="checkbox" id="CCP" name="CCP" value="yes" onchange="
+            var divToToggle = document.getElementById('CCPAmnt');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="CCPAmnt" class="CCPPercent-container" style=" display: flex; align-items: center;">
+              <label for="CCPPercent" style="color: #1F1A17;">CCP Percent:</label>
+              <input type="number" id="CCPPercent" name="CCPPercent" value=100 disabled>
+            </div>
+          </div>
+
+ 
+          <div class="QCInput" style=" display: flex; align-items: center;   justify-content: space-between;">
+            <label for="MSSF" style="color: #1F1A17;">MSSF:</label>
+            <input type="checkbox" id="MSSF" name="MSSF" value="yes" onchange="
+            var divToToggle = document.getElementById('MSSFAmnt');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="MSSFAmnt" class="MSSFPercent-container" style=" display: flex; align-items: center;">
+              <label for="MSSFPercent" style="color: #1F1A17;">MSSF Percent:</label>
+              <input type="number" id="MSSFPercent" name="MSSFPercent" value=100 disabled>
+            </div>
+          </div>
+
+
+          <div class="QCInput" style=" display: flex;  justify-content: space-between;">
+            <label for="MGA" style="color: #1F1A17;">MGA:</label>
+            <input type="checkbox" id="MGA" name="MGA" value="yes"  onchange="
+            var divToToggle = document.getElementById('MGAC');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="MGAC" class="MGAAmount-container" style=" display: flex; align-items: center;">
+              <label for="MGAAmount" style="color: #1F1A17;">MGA Amount:</label>
+              <input type="number" id="MGAAmount" name="MGAAmount" placeholder="Enter MGA Amount" disabled>
+            </div>
+          </div>
+
+
+          <div class="QCInput" style=" display: flex;  justify-content: space-between;">
+            <label for="Discount" style="color: #1F1A17;">Discount Slab:</label>
+            <input type="checkbox" id="Discount" name="Discount" value="yes" onchange="
+            var divToToggle = document.getElementById('DiscountAmnt');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="DiscountAmnt" class="DiscountAmount-container" style=" display: flex; align-items: center;">
+              <label for="DiscountAmount" style="color: #1F1A17;">Discount Amount:</label>
+              <input type="number" id="DiscountAmount" name="DiscountAmount" placeholder="Enter Avg.Discount/DSE" disabled>
+            </div>
+          </div>
+
+
+          <div class="QCInput" style=" display: flex;  justify-content: space-between;">
+            <label for="Exchange" style="color: #1F1A17;">Exchange :</label>
+            <input type="checkbox" id="Exchange" name="Exchange" value="yes" onchange="
+            var divToToggle = document.getElementById('ExchangeAmnt');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="ExchangeAmnt" class="ExchangeAmount-container" style=" display: flex; align-items: center;">
+              <label for="ExchangeCount" style="color: #1F1A17;">Exchange Count:</label>
+              <input type="number" id="ExchangeCount" name="ExchangeCount" placeholder="Enter MIN.Exchange" disabled>
+            </div>
+          </div>
+
+          <div class="QCInput" style=" display: flex;  justify-content: space-between;">
+            <label for="Complaint" style="color: #1F1A17;">Complaint :</label>
+            <input type="checkbox" id="Complaint" name="Complaint" value="yes" onchange="
+            var divToToggle = document.getElementById('ComplaintAmnt');
+            divToToggle.getElementsByTagName('input')[0].disabled = !this.checked;">
+            <div id="ComplaintAmnt" class="ComplaintCount-container" style=" display: flex; align-items: center;">
+              <label for="ComplaintCount" style="color: #1F1A17;">Complaint Count:</label>
+              <input type="number" id="ComplaintCount" name="ComplaintCount" placeholder="Enter MAX.Complaint" disabled>
+            </div>
+          </div>
+
+
+
         </div>
       </div>
 
@@ -127,7 +224,7 @@
           <button type="button" id="removePerModelPairButton">Remove Model Pair</button>
 
           <div id="perModelPairContainer">
-            <div class="perModelPairContainer">
+            <!-- <div class="perModelPairContainer">
               <label for="carModel1">Car Model:</label>
               <select id="carModel1">
                 <option value="ALTO">ALTO</option>
@@ -143,7 +240,7 @@
               </select>
               <label for="incentive1">Incentive:</label>
               <input type="number" id="incentive1" placeholder="Enter incentive amount">
-            </div>
+            </div> -->
           </div>
 
          
@@ -174,13 +271,13 @@
 
       <!-- Special Car Incentive -->
 
-      <div id="specialCarPairSection">
+      <div  class="specialCarPairSection" id="specialCarPairSection">
         <h2 style="color: #1F1A17;">Special Car Incentive</h2>
         <button type="button" id="addSpecialCarPairButton">Add Special Car Incentive Pair</button>
         <button type="button" id="removeSpecialCarPairButton">Remove Special Car Incentive Pair</button>
         <div id="specialCarPairContainer">
 
-        <div class="specialCarPairContainer">
+        <!-- <div class="specialCarPairContainer">
           <label for="SCcarModel1">Car Model:</label>
           <select id="SCcarModel1">
             <option value="ALTO">ALTO</option>
@@ -196,7 +293,7 @@
           </select>
           <label for="SCincentive1">Incentive:</label>
           <input type="number" id="SCincentive1" placeholder="Enter incentive amount">
-        </div>
+        </div> -->
 
         </div>
       </div>
@@ -204,7 +301,7 @@
 
 
 
-      <div id="ExchangePairSection" style="color: #1F1A17; margin-top: 20px;">
+      <div class="ExchangePairSection" id="ExchangePairSection" style="color: #1F1A17;">
         <h2 style="color: #1F1A17;">Exchange Status Incentive</h2>
 
         <button type="button" id="addExchangePairButton">Add Exchange Pair</button>
@@ -220,7 +317,7 @@
 
 
 
-      <div id="ComplaintSection" style="color: #1F1A17; margin-top: 20px;">
+      <div class="ComplaintSection" id="ComplaintSection" style="color: #1F1A17; margin-top: 20px;">
         <h2 style="color: #1F1A17;">Complaint Status Deduction</h2>
      
         <button type="button" id="addComplaintPairButton">Add Complaint Pair</button>
@@ -232,15 +329,14 @@
 
 
 
-      <div class="SuperCar-container">
+      <!-- <div class="SuperCar-container">
         <h2 style="color: #1F1A17;">Super Car Incentive</h2>
         <div id="SuperCar" style="display: flex; padding: 20px; flex-direction: column; margin-bottom: 20px;">
           <div class="SuperCarSelection-container" style=" display: flex;   justify-content: space-evenly;">
             <label for="SuperCarSelection" style="color: #1F1A17;">Select Super Car Incentive Criteria Check:</label>
             <div id="SuperCarSelection">
 
-              <!-- <label style="color: #1F1A17;"><input type="checkbox" name="superCarCheck"
-                  value="zerodiscountOnVehicle">Minimum Discount on Vehicle</label> -->
+         
                   <div class="SuperDiscount-input-container">
                   <label for="zeroDiscountCheck">Max Possible Discount on Vehicle:</label>
                   <input type="checkbox" id="zeroDiscountCheck" name="superCarCheck" value="zeroDiscountOnVehicle"  onchange="document.getElementById('DiscountValue').classList.toggle('hidden', !this.checked)">
@@ -248,25 +344,13 @@
                 </div>
 
                 <br>
-              <!-- <label style="color: #1F1A17;"><input type="checkbox" name="superCarCheck" value="MGASaleGT30K">MGA Sale
-                is Greater Than 30,000</label> -->
+          
 
                 <div class="input-container">
                   <label for="MGASaleCheck">MGA Sale is Greater Than:</label>
                   <input type="checkbox" id="MGASaleCheck" name="superCarCheck" value="MGASaleGT30K" onchange="document.getElementById('MGASaleValue').classList.toggle('hidden', !this.checked)">
                   <input type="number" id="MGASaleValue" name="MGASaleValue" placeholder="Enter MGA Sale Value" class="hidden">
                 </div>
-
-
-
-                <!-- <div style=" display: flex;  justify-content: space-evenly;">
-                  <label for="autocard" style="color: #1F1A17;">AutoCard:</label>
-                  <input type="checkbox" id="autocard" name="autocard" value="yes" onchange="document.getElementById('autocardPercent-container').classList.toggle('hidden', !this.checked)">
-                  <div id="autocardPercent-container" class="hidden">
-                    <label for="autocardPercent" style="color: #1F1A17;">AutoCard Percent:</label>
-                    <input type="number" id="autocardPercent" name="autocardPercent" >
-                  </div>
-                </div>  -->
 
 
 <br>
@@ -285,8 +369,79 @@
             <input type="number" name="SuperCarIncentive" id="SuperCarIncentive">
           </div>
         </div>
-      </div>
+      </div> -->
 
+
+      
+
+    <div class="SuperCar-container" style="padding: 20px;">
+      <h2 style="color: #1F1A17;">Super Car Incentive</h2>
+      <div id="SuperCar" style="display: flex; justify-content: space-between; padding-left: 30px; padding-right: 10px; margin-bottom: 20px;">
+          <!-- Left column with the selection criteria -->
+          <div class="SuperCarSelection-container" style="display: flex; flex-direction: column; flex: 1; margin-right: 5px;">
+              <h3 style="color: #1F1A17;">Select Super Car Incentive Criteria Check:</h3>
+
+              <div id="SuperCarSelection" style="display: flex; flex-direction: column; gap: 10px;">
+  
+                  <div class="SuperDiscount-input-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
+
+                    <input type="checkbox" id="zeroDiscountCheck" name="superCarCheck" value="zeroDiscountOnVehicle" onchange="document.getElementById('DiscountValue').classList.toggle('hidden', !this.checked)">
+                      <label for="zeroDiscountCheck">Max Possible Discount on Vehicle:</label>
+                      
+                      <input type="number" id="DiscountValue" name="DiscountValue" placeholder="Enter Discount Value" class="hidden">
+                  </div>
+  
+                  <div class="input-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
+                    <input type="checkbox" id="MGASaleCheck" name="superCarCheck" value="MGASaleGT30K" onchange="document.getElementById('MGASaleValue').classList.toggle('hidden', !this.checked)">
+                      <label for="MGASaleCheck">MGA Sale is Greater Than:</label>
+                     
+                      <input type="number" id="MGASaleValue" name="MGASaleValue" placeholder="Enter MGA Sale Value" class="hidden">
+                  </div>
+
+
+  
+
+                  <div class="input-container" style="display: flex; justify-content: flex-start; align-items: center; gap: 10px;">
+                    <input type="checkbox" name="superCarCheck" value="royalPlatinum">
+
+                    <label> EW Sale Of 5 Years (Royal Platinum)</label>
+                </div>
+
+                <div class="input-container" style="display: flex; justify-content: flex-start; align-items: center; gap: 10px;">
+                  <input type="checkbox" name="superCarCheck" value="insurance">
+  
+                  <label> Insurance</label>
+                </div>
+
+                <div class="input-container" style="display: flex; justify-content: flex-start; align-items: center; gap: 10px;">
+                  <input type="checkbox" name="superCarCheck" value="CCP">
+  
+                  <label> CCP (2 Years)</label>
+                </div>
+
+                <div class="input-container" style="display: flex; justify-content: flex-start; align-items: center; gap: 10px;">
+                  <input type="checkbox" name="superCarCheck" value="MSR">  
+                  <label> MSR</label>
+                   
+                </div>
+
+
+
+
+
+
+              </div>
+          </div>
+          <!-- Right column with the incentive input -->
+          <div class="Incentive-container" style="display: flex; flex-direction: column; flex: 1; justify-content: center; align-items: center;">
+         
+              <label for="SuperCarIncentive" style="color: #1F1A17;">Enter Super Car Incentive :</label>
+              <input type="number" name="SuperCarIncentive" id="SuperCarIncentive" style="width: 60%; margin-top: 10px;">
+            
+          </div>
+      </div>
+  </div>
+  
 
 
       <div class="CDI-section">

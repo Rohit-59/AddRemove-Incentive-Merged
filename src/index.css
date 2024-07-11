@@ -96,7 +96,11 @@ form {
 #qcInputs div {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.QCInput {
+  margin-bottom: 13px;
 }
 
 /* New DSE Section Styles */
@@ -121,7 +125,7 @@ form {
   border-radius: 5px;
 }
 
-#perModelPairContainer,
+/* #perModelPairContainer,
 #specialCarPairContainer,
 #Exchange-pairs-container,
 #Complaint-pairs-container {
@@ -130,15 +134,18 @@ form {
   background-color: #EFEFEF;
   border: 2px solid #989898;
   border-radius: 5px;
-}
+} */
 
 .DSECarIncentive,
 .SuperCar-container,
+.specialCarPairSection,
 .CDI-section,
 .discountIncentive-section,
 .MGA-section,
 .EW-section,
 .MSR-section,
+.ExchangePairSection,
+.ComplaintSection,
 .ccp-section,
 .MSSF-section,
 .inputFile-section {
@@ -154,13 +161,47 @@ form {
 .specialCarPairContainer,
 .Exchange-pair-container,
 .Complaint-pair-container,
-.SuperCarSelection-container {
+.Number-pair-container,
+.inputGroup,
+.cdiInput,
+.CCPinputGroup,
+.MSSFinputGroup,
+.DinputGroup,
+.MGAinputGroup {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   margin-bottom: 10px;
   background-color: #EFEFEF;
 }
+
+/* For input size */
+@media (max-width: 1402px) {
+.pair-container input,
+.perModelPairContainer input,
+.specialCarPairContainer input,
+.Exchange-pair-container input,
+.Complaint-pair-container input,
+.Number-pair-container input,
+.inputGroup input,
+.cdiInput input,
+.CCPinputGroup input,
+.MSSFinputGroup input,
+.DinputGroup input,
+.MGAinputGroup input {
+width: 50%;
+}
+}
+
+
+
+.SuperCarSelection-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+  background-color: #EFEFEF;
+}
+
 
 input{
   color: #3f3f3f;

@@ -11,8 +11,8 @@ let DiscountInputs = [];
 let ComplaintInputs = [];
 let MSRinputs = [];
 let NumberPairs = [];
-let pairCount = 1;
-let specialCarPairCount = 1;
+let pairCount = 0;
+let specialCarPairCount = 0;
 let newDSEInput = [];
 
 
@@ -733,11 +733,30 @@ document.addEventListener("DOMContentLoaded", function () {
         const qcData = {
             numOfCars: formData.get('numCars'),
             focusModel: formData.getAll('carsFM'),
-            // autoCard: formData.get('autocard'),
-            // EW: formData.get('ew')
             autoCard: AC.checked ? 'yes' : 'no',
-            EW: eW.checked ? 'yes' : 'no'
+            autocardPercent: formData.get('autocardPercent'),
+            EW: eW.checked ? 'yes' : 'no',
+            ewdPercent: formData.get('ewdPercent'),
+            CCPCheck: CCP.checked ? 'yes' : 'no',
+            CCPPercent: formData.get('CCPPercent'),
+            MSSFCheck: MSSF.checked ? 'yes' : 'no',
+            MSSFPercent: formData.get('MSSFPercent'),
+            MGACheck: MGA.checked ? 'yes' : 'no',
+            MGAAmount: formData.get('MGAAmount'),
+            DiscountCheck: Discount.checked ? 'yes' : 'no',
+            DiscountAmount: formData.get('DiscountAmount'),
+            ExchangeCheck: Exchange.checked ? 'yes' : 'no',
+            ExchangeCount: formData.get('ExchangeCount'),
+            ComplaintCheck: Complaint.checked ? 'yes' : 'no',
+            ComplaintCount: formData.get('ComplaintCount'),
         };
+
+
+
+
+
+
+
         const superCar = {
             superCarCriteria: formData.getAll('superCarCheck'),
             superCarIncentive: formData.get('SuperCarIncentive'),

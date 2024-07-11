@@ -123,6 +123,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
     let TotalNumberCheck = 0;
     let CCPcheck = 0;
     let DiscountCount = 0;
+    let DiscountAmount = 0;
     let MSSFcheck = 0;
     let autoCardCheck = 0;
     let obj = {};
@@ -190,6 +191,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
     }
 
     if (empStatus) {
+
       DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
 
         Discount = Discount + parseInt(sold["FINAL DISCOUNT"]);
@@ -236,24 +238,110 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
 
       //for EW and auto card check
       if (numberCheck >= formData.QC.numOfCars) {
+
+
         let EWFlag = true;
         let autoCardFlag = true;
+        let CCPFlag = true;
+        let MSSFFlag = true;
+        let MGAFlag = true;
+        let DiscountFlag = true;
+        let ExchangeFlag = true;
+        let ComplainFlag = true;
 
-        //checking autocard from the excel [form ] 
-        if (formData.QC.autoCard === "yes" && (EWCheck >= DSE_NoOfSoldCarExcelDataArr.length))
-          autoCardFlag = true;
-        else {
-          if (formData.QC.autoCard === "yes")
+        //checking autocard checked 
+        if (formData.QC.autoCard === "yes") {
+          //if % is greater or equal then qualify 
+          if ((autoCardCheck / TotalNumberCheck) * 100 >= formData.QC.autocardPercent)
+            autoCardFlag = true;
+          else {
             autoCardFlag = false;
+          }
         }
-        if (formData.QC.EW === "yes" && (EWCheck >= DSE_NoOfSoldCarExcelDataArr.length))
-          EWFlag = true;
-        else {
-          if (formData.QC.EW === "yes")
+
+        //checking Extended warranty checked 
+        if (formData.QC.EW === "yes") {
+          //if % is greater or equal then qualify 
+          if (((EWCheck / TotalNumberCheck) * 100) >= formData.QC.ewdPercent)
+            EWFlag = true;
+          else {
             EWFlag = false;
+          }
         }
-        if (EWFlag && autoCardFlag) {
-          // console.log("sdfghgfcvhjkjhv  :  ", obj);
+
+        //checking CCP checked 
+        if (formData.QC.CCPCheck === "yes") {
+          //if % is greater or equal then qualify 
+          if (((CCPcheck / TotalNumberCheck) * 100) >= formData.QC.CCPPercent)
+            CCPFlag = true;
+          else {
+            CCPFlag = false;
+          }
+        }
+
+        //checking MSSF checked 
+        if (formData.QC.MSSFCheck === "yes") {
+          //if % is greater or equal then qualify 
+          if (((MSSFcheck / TotalNumberCheck) * 100) >= formData.QC.MSSFPercent)
+            MSSFFlag = true;
+          else {
+            MSSFFlag = false;
+          }
+        }
+
+
+        //checking MGA checked 
+        if (formData.QC.MGACheck === "yes") {
+          //if % is greater or equal then qualify 
+          let MGAAmountForQC = 0;
+          const result = searchByID(MGAdata, DSE_NoOfSoldCarExcelDataArr[0]['DSE ID']);
+          if (result) {
+            MGAAmountForQC = result["MGA/VEH"];
+            if (MGAAmountForQC >= formData.QC.MGAAmount)
+              MGAFlag = true;
+            else {
+              MGAFlag = false;
+            }
+          } else {
+            MGAFlag = false;
+          }
+        }
+
+
+        //checking Discount checked 
+        if (formData.QC.DiscountCheck === "yes") {
+          //if % is greater or equal then qualify 
+          let AvgDiscount = Discount / DiscountCount;
+          if (AvgDiscount <= formData.QC.DiscountAmount)
+            DiscountFlag = true;
+          else
+            DiscountFlag = false;
+        }
+
+        //checking Exchange checked 
+        if (formData.QC.ExchangeCheck === "yes") {
+          //if % is greater or equal then qualify 
+
+          if (ExchangeStatusCheck >= formData.QC.ExchangeCount)
+            ExchangeFlag = true;
+          else
+            ExchangeFlag = false;
+        }
+
+        //checking Complaint checked 
+        if (formData.QC.ComplaintCheck === "yes") {
+          //if % is greater or equal then qualify 
+          if (ComplaintCheck <= formData.QC.ComplaintCount)
+            ComplainFlag = true;
+          else
+            ComplainFlag = false;
+        }
+
+
+       
+
+        // check final qulification
+        if (EWFlag && autoCardFlag && CCPFlag && MSSFFlag && MGAFlag && DiscountFlag && ExchangeFlag && ComplainFlag) {
           obj = {
             ...obj,
             ...carObj,
@@ -304,7 +392,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
           ...obj,
           ...carObj,
           "Status": "OLD",
-          "Focus Model Qualification": "No",
+          "Focus Model Qualification": "NO",
           "Discount": Discount > 0 ? Discount : 0,
           "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
           "Exchange Status": ExchangeStatusCheck,
