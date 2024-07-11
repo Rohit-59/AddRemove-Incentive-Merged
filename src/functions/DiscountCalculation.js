@@ -24,8 +24,7 @@ module.exports = (qualifiedRM, formData) => {
                 }
             }
         }
-        // console.log(`element["Discount Incentive"]`);
-        // console.log(element["Discount Incentive"]);
+
 
     });
     return qualifiedRM;
