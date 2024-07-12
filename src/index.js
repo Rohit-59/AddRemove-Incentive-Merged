@@ -15,7 +15,7 @@ const createWindow = () => {
     // width: 1290,
     // height: 1080,
     icon: path.join(__dirname, './assets/NimarMotor.png'),
-    // autoHideMenuBar: true,
+    autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
@@ -198,7 +198,12 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
 
       DSE_NoOfSoldCarExcelDataArr.forEach((sold) => {
 
-        Discount = Discount + parseInt(sold["FINAL DISCOUNT"]);
+        if (parseInt(sold["FINAL DISCOUNT"]) > 0) {
+          Discount += parseInt(sold["FINAL DISCOUNT"]);
+      }
+                    
+
+
         carObj[sold["Model Name"]]++;
      
 
@@ -352,7 +357,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
             "Status": "OLD",
             "Focus Model Qualification": "YES",
             "Discount": Discount > 0 ? Discount : 0,
-            "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
+            "AVG. Discount": Discount > 0 ? Discount / TotalNumberCheck : 0,
             "Exchange Status": ExchangeStatusCheck,
             "Complaints": ComplaintCheck,
             "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
@@ -377,7 +382,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
           "Status": "OLD",
           "Focus Model Qualification": "NO",
           "Discount": Discount > 0 ? Discount : 0,
-          "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
+          "AVG. Discount": Discount > 0 ? Discount / TotalNumberCheck : 0,
           "Exchange Status": ExchangeStatusCheck,
           "Complaints": ComplaintCheck,
           "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,
@@ -402,7 +407,9 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
 
         TotalNumberCheck++;
 
-        Discount = Discount + parseInt(sold["FINAL DISCOUNT"]);
+        if (parseInt(sold["FINAL DISCOUNT"]) > 0) {
+          Discount += parseInt(sold["FINAL DISCOUNT"]);
+      }
         carObj[sold["Model Name"]]++;
       
         if (parseInt(sold["FINAL DISCOUNT"]) > 0) {
@@ -436,7 +443,7 @@ const checkQualifingCondition = (formData, employeeStatusDataSheet) => {
         "Status": "NEW",
         "Focus Model Qualification": "NO",
         "Discount": Discount > 0 ? Discount : 0,
-        "AVG. Discount": Discount > 0 ? Discount / DiscountCount : 0,
+        "AVG. Discount": Discount > 0 ? Discount / TotalNumberCheck : 0,
         "Exchange Status": ExchangeStatusCheck,
         "Complaints": ComplaintCheck,
         "EW Penetration": (EWPCheck / TotalNumberCheck) * 100,

@@ -39,7 +39,11 @@ module.exports =  (qualifiedRM, formData) => {
         for (let i = 0; i < formData["Extended Warranty"].length; i++) {
             const condition = formData["Extended Warranty"][i];
             if (condition.type === 'less' && userEW <= condition.value) {
+              if(condition.incentive<0){
+                element["EW Incentive"] = (element["Grand Total"] - noOfCarSoldEW)*condition.incentive;
+              }else{      
               element["EW Incentive"] = noOfCarSoldEW*condition.incentive;
+            }
               break;
             } else if (condition.type === 'greater' && userEW >= condition.value) {
               element["EW Incentive"] = noOfCarSoldEW*condition.incentive;

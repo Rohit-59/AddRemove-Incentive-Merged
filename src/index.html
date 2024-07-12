@@ -5,12 +5,15 @@
   <meta charset="UTF-8" />
   <title>Incentive Calculator</title>
   <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
   &nbsp;&nbsp;&nbsp;
-  <h1 style="text-align: center;color: #1F1A17;">Maruti</h1>
-  <h1 style="text-align: center;color: #1F1A17;"> Incentive Calculator </h1>
+  <h1 style="text-align: center;color: #0e0a04;">Maruti</h1>
+  <h1 style="text-align: center;color: #0e0a04;"> Incentive Calculator </h1>
   
   
   <div class="errormsg" id="errormsgSales">
@@ -203,8 +206,8 @@
 
         <div id="perCarIncentiveSection">
           <h2 style="color: #1F1A17;">Per Car Incentive</h2>
-          <button type="button" id="addPairButton">Add Pair</button>
-          <button type="button" id="removePairButton">Remove Pair</button>
+          <button type="button" id="addPairButton">Add Input</button>
+          <button type="button" id="removePairButton">Remove Input</button>
 
           <div id="pairs-container" style="color: #1F1A17; margin-top: 20px;">
             <div class="pair-container">
@@ -219,35 +222,19 @@
         <div id="perModelIncentiveSection" class="hidden">
           <h2 style="color: #1F1A17;">Per Model Incentive</h2>
 
-          <button type="button" id="addPerModelPairButton">Add Another Model Incentive Pair</button>
+          <button type="button" id="addPerModelPairButton">Add Input</button>
 
-          <button type="button" id="removePerModelPairButton">Remove Model Pair</button>
+          <button type="button" id="removePerModelPairButton">Remove Input</button>
 
           <div id="perModelPairContainer">
-            <!-- <div class="perModelPairContainer">
-              <label for="carModel1">Car Model:</label>
-              <select id="carModel1">
-                <option value="ALTO">ALTO</option>
-                <option value="ALTO K-10">ALTO K-10</option>
-                <option value="S-Presso">S-Presso</option>
-                <option value="CELERIO">CELERIO</option>
-                <option value="WagonR">WagonR</option>
-                <option value="BREZZA">BREZZA</option>
-                <option value="DZIRE">DZIRE</option>
-                <option value="EECO">EECO</option>
-                <option value="Ertiga">Ertiga</option>
-                <option value="SWIFT">SWIFT</option>
-              </select>
-              <label for="incentive1">Incentive:</label>
-              <input type="number" id="incentive1" placeholder="Enter incentive amount">
-            </div> -->
+            
           </div>
 
          
 
           <h2 style="color: #1F1A17;">Incentive Based on Numbers</h2>
-          <button type="button" id="addNumberPairButton">Add Number Pair</button>
-          <button type="button" id="removeNumberPairButton">Remove Number Pair</button>
+          <button type="button" id="addNumberPairButton">Add Input</button>
+          <button type="button" id="removeNumberPairButton">Remove Input</button>
 
           <div id="Number-pairs-container" style="color: #1F1A17; margin-top: 20px;">
             <!-- <div class="Number-pair-container">
@@ -273,27 +260,9 @@
 
       <div  class="specialCarPairSection" id="specialCarPairSection">
         <h2 style="color: #1F1A17;">Special Car Incentive</h2>
-        <button type="button" id="addSpecialCarPairButton">Add Special Car Incentive Pair</button>
-        <button type="button" id="removeSpecialCarPairButton">Remove Special Car Incentive Pair</button>
+        <button type="button" id="addSpecialCarPairButton">Add Input</button>
+        <button type="button" id="removeSpecialCarPairButton">Remove Input</button>
         <div id="specialCarPairContainer">
-
-        <!-- <div class="specialCarPairContainer">
-          <label for="SCcarModel1">Car Model:</label>
-          <select id="SCcarModel1">
-            <option value="ALTO">ALTO</option>
-            <option value="ALTO K-10">ALTO K-10</option>
-            <option value="S-Presso">S-Presso</option>
-            <option value="CELERIO">CELERIO</option>
-            <option value="WagonR">WagonR</option>
-            <option value="BREZZA">BREZZA</option>
-            <option value="DZIRE">DZIRE</option>
-            <option value="EECO">EECO</option>
-            <option value="Ertiga">Ertiga</option>
-            <option value="SWIFT">SWIFT</option>
-          </select>
-          <label for="SCincentive1">Incentive:</label>
-          <input type="number" id="SCincentive1" placeholder="Enter incentive amount">
-        </div> -->
 
         </div>
       </div>
@@ -304,8 +273,8 @@
       <div class="ExchangePairSection" id="ExchangePairSection" style="color: #1F1A17;">
         <h2 style="color: #1F1A17;">Exchange Status Incentive</h2>
 
-        <button type="button" id="addExchangePairButton">Add Exchange Pair</button>
-        <button type="button" id="removeLastExchangePairButton">Remove Last Pair</button>
+        <button type="button" id="addExchangePairButton">Add Input</button>
+        <button type="button" id="removeLastExchangePairButton">Remove Input</button>
 
         <div id="Exchange-pairs-container" >
   
@@ -320,56 +289,13 @@
       <div class="ComplaintSection" id="ComplaintSection" style="color: #1F1A17; margin-top: 20px;">
         <h2 style="color: #1F1A17;">Complaint Status Deduction</h2>
      
-        <button type="button" id="addComplaintPairButton">Add Complaint Pair</button>
-        <button type="button" id="removeLastComplaintPairButton">Remove Last Pair</button>
+        <button type="button" id="addComplaintPairButton">Add Input</button>
+        <button type="button" id="removeLastComplaintPairButton">Remove Input</button>
 
         <div id="Complaint-pairs-container" >
       </div>
       </div>
 
-
-
-      <!-- <div class="SuperCar-container">
-        <h2 style="color: #1F1A17;">Super Car Incentive</h2>
-        <div id="SuperCar" style="display: flex; padding: 20px; flex-direction: column; margin-bottom: 20px;">
-          <div class="SuperCarSelection-container" style=" display: flex;   justify-content: space-evenly;">
-            <label for="SuperCarSelection" style="color: #1F1A17;">Select Super Car Incentive Criteria Check:</label>
-            <div id="SuperCarSelection">
-
-         
-                  <div class="SuperDiscount-input-container">
-                  <label for="zeroDiscountCheck">Max Possible Discount on Vehicle:</label>
-                  <input type="checkbox" id="zeroDiscountCheck" name="superCarCheck" value="zeroDiscountOnVehicle"  onchange="document.getElementById('DiscountValue').classList.toggle('hidden', !this.checked)">
-                  <input type="number" id="DiscountValue" name="DiscountValue" placeholder="Enter Discount Value" class="hidden">
-                </div>
-
-                <br>
-          
-
-                <div class="input-container">
-                  <label for="MGASaleCheck">MGA Sale is Greater Than:</label>
-                  <input type="checkbox" id="MGASaleCheck" name="superCarCheck" value="MGASaleGT30K" onchange="document.getElementById('MGASaleValue').classList.toggle('hidden', !this.checked)">
-                  <input type="number" id="MGASaleValue" name="MGASaleValue" placeholder="Enter MGA Sale Value" class="hidden">
-                </div>
-
-
-<br>
-              <label style="color: #1F1A17;"><input type="checkbox" name="superCarCheck" value="royalPlatinum">EW Sale
-                Of 5 Years (Royal Platinum)</label>
-                <br>
-              <label style="color: #1F1A17;"><input type="checkbox" name="superCarCheck"
-                  value="insurance">Insurance</label>
-                  <br>
-              <label style="color: #1F1A17;"><input type="checkbox" name="superCarCheck" value="CCP"> CCP (2
-                Years)</label>
-                <br>
-              <label style="color: #1F1A17;"><input type="checkbox" name="superCarCheck" value="MSR"> MSR</label>
-            </div>
-            <label for="SuperCarIncentive" style="color: #1F1A17;">Enter Super Car Incentive :</label>
-            <input type="number" name="SuperCarIncentive" id="SuperCarIncentive">
-          </div>
-        </div>
-      </div> -->
 
 
       
@@ -390,6 +316,18 @@
                       
                       <input type="number" id="DiscountValue" name="DiscountValue" placeholder="Enter Discount Value" class="hidden">
                   </div>
+
+
+                  <!-- <div class="SuperMGADiscount-input-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
+
+                    <input type="checkbox" id="MGADiscountCheck" name="superCarCheck" value="MGADiscountCheck" onchange="document.getElementById('MGADiscountValue').classList.toggle('hidden', !this.checked)">
+                      <label for="MGADiscountCheck">Max Possible Discount on Vehicle:</label>
+                      
+                      <input type="number" id="MGADiscountValue" name="MGADiscountValue" placeholder="Enter MGA Discount Value" class="hidden">
+                  </div> -->
+
+
+
   
                   <div class="input-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
                     <input type="checkbox" id="MGASaleCheck" name="superCarCheck" value="MGASaleGT30K" onchange="document.getElementById('MGASaleValue').classList.toggle('hidden', !this.checked)">
@@ -453,7 +391,7 @@
           <option value="range">Range</option>
         </select>
         <button type="button" id="addInputButton">Add Input</button>
-        <button type="button" id="removeCDIInput">Remove CDI Input</button>
+        <button type="button" id="removeCDIInput">Remove Input</button>
 
 
         <div id="cdiInputs"></div>
@@ -463,8 +401,8 @@
 
       <div class="discountIncentive-section">
         <h2 style="color: #1F1A17;">Discount Incentive</h2>
-        <button type="button" id="addDiscountInputButton">Add Discount Slab Input</button>
-        <button type="button" id="removeDiscountInput">Remove Discount Input</button>
+        <button type="button" id="addDiscountInputButton">Add Slab</button>
+        <button type="button" id="removeDiscountInput">Remove Slab</button>
 
         <div id="DiscountInputsContainer"></div>
       </div>
@@ -473,8 +411,8 @@
       <div class="MGA-section">
         <h2 style="color: #1F1A17;">MGA Incentive</h2>
         <br>
-        <button type="button" id="addMGAInput">Add MGA Input</button>
-        <button type="button" id="removeMGAInput">Remove MGA Input</button>
+        <button type="button" id="addMGAInput">Add Input</button>
+        <button type="button" id="removeMGAInput">Remove Input</button>
 
         <div id="MGAinputsContainer">
         </div>
@@ -490,8 +428,8 @@
           <option value="less">Less Than or Equal To</option>
           <option value="range">Range</option>
         </select>
-        <button type="button" id="addEWInputButton">Add EW Input</button>
-        <button type="button" id="removeEWInputButton">Remove EW Input</button>
+        <button type="button" id="addEWInputButton">Add Input</button>
+        <button type="button" id="removeEWInputButton">Remove Input</button>
 
         <!-- Container for dynamically added inputs -->
         <div id="EWinputsContainer"></div>
@@ -506,8 +444,8 @@
           <option value="range">Range</option>
         </select>
 
-        <button type="button" id="addMSRInputButton">Add MSR Input</button>
-        <button type="button" id="removeMSRInputButton">Remove MSR Input</button>
+        <button type="button" id="addMSRInputButton">Add Input</button>
+        <button type="button" id="removeMSRInputButton">Remove Input</button>
 
 
         <!-- Container for dynamically added inputs -->
@@ -524,8 +462,8 @@
           <option value="range">Range</option>
         </select>
 
-        <button type="button" id="addCCPInputButton">Add CCP Input</button>
-        <button type="button" id="removeCCPInputButton">Remove CCP Input</button>
+        <button type="button" id="addCCPInputButton">Add Input</button>
+        <button type="button" id="removeCCPInputButton">Remove Input</button>
 
 
         <!-- Container for dynamically added inputs -->
@@ -542,8 +480,8 @@
           <option value="range">Range</option>
         </select>
 
-        <button type="button" id="addMSSFInputButton">Add MSSF Input</button>
-        <button type="button" id="removeMSSFInputButton">Remove MSSF Input</button>
+        <button type="button" id="addMSSFInputButton">Add Input</button>
+        <button type="button" id="removeMSSFInputButton">Remove Input</button>
 
 
         <!-- Container for dynamically added inputs  -->

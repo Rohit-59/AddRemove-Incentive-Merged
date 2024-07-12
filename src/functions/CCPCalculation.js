@@ -38,7 +38,12 @@ module.exports =  (qualifiedRM, formData) => {
         for (let i = 0; i < formData["CCP"].length; i++) {
             const condition = formData["CCP"][i];
             if (condition.type === 'less' && userCCP <= condition.value) {
+                         
+              if(condition.incentive<0){
+                element["CCP Incentive"] = (element["Grand Total"] - noOfCarSoldCCP)*condition.incentive;
+              }else{      
               element["CCP Incentive"] = noOfCarSoldCCP*condition.incentive;
+            }
               break;
             } else if (condition.type === 'greater' && userCCP >= condition.value) {
               element["CCP Incentive"] = noOfCarSoldCCP*condition.incentive;

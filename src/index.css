@@ -5,12 +5,13 @@
 /* General Styles */
 body {
   overflow-x: hidden;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
   line-height: 1;
   color: #fff;
-  background: #F4A261;
+  background: #da8a5f;
 }
+
 
 
 .container {
@@ -24,7 +25,8 @@ body {
 h1,
 h2,
 h4 {
-  color: #1F1A17;
+  font-weight: 800;
+  color: #0033E7;
 }
 
 h1 {
@@ -224,7 +226,7 @@ input[type="file"] {
 
 button {
   padding: 10px 20px;
-  background-color: #1F1A17;
+  background-color: #02081b;
   color: #FFFFFF;
   border: none;
   cursor: pointer;

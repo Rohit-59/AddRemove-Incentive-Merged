@@ -762,7 +762,8 @@ document.addEventListener("DOMContentLoaded", function () {
             superCarIncentive: formData.get('SuperCarIncentive'),
             superCarValues: {
                 MGA:formData.get('MGASaleValue'),
-                Discount:formData.get('DiscountValue')
+                Discount:formData.get('DiscountValue'),
+                // MGADiscount:formData.get('MGADiscountValue')
             }
         };
 
