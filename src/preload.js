@@ -14,6 +14,7 @@ let NumberPairs = [];
 let pairCount = 0;
 let specialCarPairCount = 0;
 let newDSEInput = [];
+let perModelProgressivePairs = [];
 
 
 
@@ -391,6 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedType = MSSFinputType.value;
         const MSSFContainer = document.getElementById("MSSFinputsContainer");
         addMSSFInputFields(selectedType, MSSFContainer);
+      
 
     })
 
@@ -463,6 +465,38 @@ document.addEventListener("DOMContentLoaded", function () {
     removeNumberPairButton.addEventListener('click',()=>{
        
         var container = document.getElementById('Number-pairs-container');
+    var lastChild = container.lastElementChild;
+    if (lastChild) {
+        container.removeChild(lastChild);
+    }
+
+
+    })
+
+
+    // For Model Wise Progressive Pair
+
+    const addProgressivePairButton = document.getElementById('addProgressivePairButton');
+    addProgressivePairButton.addEventListener('click', () => {
+
+        const pairContainer = document.getElementById('Progressive-pairs-container');
+        const div = document.createElement('div');
+        div.className = 'Progressive-pair-container';
+
+        div.innerHTML = `
+        <label for="vehiclePNumber">Car Number:</label>
+        <input type="number" name="vehiclePNumber">
+        <label for="incentive">Incentive:</label>
+        <input type="number" name="incentive" step="any">
+    `;
+    pairContainer.appendChild(div);
+
+    })
+
+    const removeProgressivePairButton = document.getElementById('removeProgressivePairButton');
+    removeProgressivePairButton.addEventListener('click',()=>{
+       
+        var container = document.getElementById('Progressive-pairs-container');
     var lastChild = container.lastElementChild;
     if (lastChild) {
         container.removeChild(lastChild);
@@ -546,7 +580,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const MGAinputsContainer = document.getElementById('MGAinputsContainer');
         addMGAInputFields(MGAinputsContainer);
-
+    
     })
 
 
@@ -834,11 +868,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        const ProgressivepairContainers = document.getElementsByClassName('Progressive-pair-container');
+        for (let i = 0; i < ProgressivepairContainers.length; i++) {
+            const ProgressivepairContainer = ProgressivepairContainers[i];
+            const NumberInput = ProgressivepairContainer.querySelector('input[name="vehiclePNumber"]');
+            const incentiveInput = ProgressivepairContainer.querySelector('input[name="incentive"]');
+
+
+            const NumberPair = {
+                VehicleNumber: NumberInput.value,
+                incentive: incentiveInput.value
+            };
+
+            perModelProgressivePairs.push(NumberPair);
+        }
 
 
 
 
 
+
+      const exchangeType = document.getElementById('exchangeSelect').value;
         const ExchangepairContainers = document.getElementsByClassName('Exchange-pair-container');
         for (let i = 0; i < ExchangepairContainers.length; i++) {
             const ExchangepairContainer = ExchangepairContainers[i];
@@ -1024,6 +1074,7 @@ document.addEventListener("DOMContentLoaded", function () {
         finalObj["superCar"] = superCar;
         finalObj["CDI"] = cdiIncentives;
         finalObj["carIncentive"] = carPairs;
+        finalObj["exchangeType"] = exchangeType;
         finalObj["ExchangeInputs"] = ExchangePairs;
         finalObj["ComplaintInputs"] = ComplaintInputs;
         finalObj["DiscountInputs"] = DiscountInputs;
@@ -1032,6 +1083,7 @@ document.addEventListener("DOMContentLoaded", function () {
         finalObj["Extended Warranty"] = EWInputs;
         finalObj["PerModelIncentive"] = perModelCarPairs;
         finalObj["PerModelNumberCarIncentive"] = NumberPairs;
+        finalObj["ProgressivePerModelInputs"] = perModelProgressivePairs;
         finalObj["SpecialCarIncentive"] = specialCarPairs;
         finalObj["CCP"] = CCPInputs;
         finalObj["MSSF"] = MSSFInputs;

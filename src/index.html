@@ -52,7 +52,8 @@
     </div>
     <form id="myForm">
       <!-- check qualifing Condition -->
-      <div class="qcContainer">
+      <button type="button" class="collapsible">Qualifying Condition</button>
+      <div class="qcContainer hidden">
         <h2 style="color: #1F1A17;">Qualifying Condition</h2>
         <div id="qcInputs" style="display: flex; padding: 20px; flex-direction: column; margin-bottom: 20px;">
           <div class="QCInput" style=" display: flex;   justify-content: space-evenly;">
@@ -182,7 +183,9 @@
         </div>
       </div>
 
-      <div class="newDSEContainer">
+      <button type="button" class="collapsible">New DSE Incentive</button>
+
+      <div class="newDSEContainer hidden">
         <h2 class="newDSE-section" style="color: #1F1A17;">New DSE Percar Incentive :</h2>
         <br>
         <div style=" display: flex;  justify-content: space-evenly;">
@@ -196,7 +199,9 @@
         </div>
       </div>
 
-      <div class="DSECarIncentive">
+      <button type="button" class="collapsible">DSE Car Incentive</button>
+
+      <div class="DSECarIncentive hidden">
         <label for="sectionSelect" style="color: #1F1A17;">Select Section:</label>
         <select id="sectionSelect">
           <option value="perCarIncentive">Per Car Incentive</option>
@@ -220,6 +225,8 @@
         </div>
 
         <div id="perModelIncentiveSection" class="hidden">
+
+          <!-- PerModel 1 -->
           <h2 style="color: #1F1A17;">Per Model Incentive</h2>
 
           <button type="button" id="addPerModelPairButton">Add Input</button>
@@ -231,21 +238,26 @@
           </div>
 
          
-
+<!-- PerModel 2 -->
           <h2 style="color: #1F1A17;">Incentive Based on Numbers</h2>
           <button type="button" id="addNumberPairButton">Add Input</button>
           <button type="button" id="removeNumberPairButton">Remove Input</button>
 
           <div id="Number-pairs-container" style="color: #1F1A17; margin-top: 20px;">
-            <!-- <div class="Number-pair-container">
-              <label for="cars" style="color: #1F1A17;">Vehicle Numbers:</label>
-              <input type="number" name="cars">
-              <label for="incentive" style="color: #1F1A17;">Incentive (%):</label>
-              <input type="number" name="incentive" step="any">
-            </div> -->
+        
           </div>
 
+<!-- PerModel 3 Progressive -->
 
+
+
+<h2 style="color: #1F1A17;">Progressive Model Incentive</h2>
+<button type="button" id="addProgressivePairButton">Add Input</button>
+<button type="button" id="removeProgressivePairButton">Remove Input</button>
+
+<div id="Progressive-pairs-container" style="color: #1F1A17; margin-top: 20px;">
+
+</div>
 
 
         </div>
@@ -256,9 +268,14 @@
 
       </div>
 
-      <!-- Special Car Incentive -->
 
-      <div  class="specialCarPairSection" id="specialCarPairSection">
+
+
+
+      <!-- Special Car Incentive -->
+      <button type="button" class="collapsible">Special Car Incentive</button>
+
+      <div  class="specialCarPairSection hidden" id="specialCarPairSection">
         <h2 style="color: #1F1A17;">Special Car Incentive</h2>
         <button type="button" id="addSpecialCarPairButton">Add Input</button>
         <button type="button" id="removeSpecialCarPairButton">Remove Input</button>
@@ -269,9 +286,19 @@
 
 
 
+      <button type="button" class="collapsible">Exchange Incentive</button>
 
-      <div class="ExchangePairSection" id="ExchangePairSection" style="color: #1F1A17;">
+      <div class="ExchangePairSection hidden" id="ExchangePairSection" style="color: #1F1A17;">
         <h2 style="color: #1F1A17;">Exchange Status Incentive</h2>
+
+        <label for="exchangeSelect" style="color: #1F1A17;">Select Exchange Type:</label>
+        <select id="exchangeSelect">
+          <option value="progressiveTypeIncentive">Progressive Type</option>
+          <option value="totalNumberIncentive">Total Number Type</option>
+        </select>
+
+        
+
 
         <button type="button" id="addExchangePairButton">Add Input</button>
         <button type="button" id="removeLastExchangePairButton">Remove Input</button>
@@ -285,8 +312,9 @@
 
 
 
+      <button type="button" class="collapsible">Complaint Deduction</button>
 
-      <div class="ComplaintSection" id="ComplaintSection" style="color: #1F1A17; margin-top: 20px;">
+      <div class="ComplaintSection hidden" id="ComplaintSection" style="color: #1F1A17; margin-top: 20px;">
         <h2 style="color: #1F1A17;">Complaint Status Deduction</h2>
      
         <button type="button" id="addComplaintPairButton">Add Input</button>
@@ -299,8 +327,9 @@
 
 
       
+      <button type="button" class="collapsible">SuperCar Incentive</button>
 
-    <div class="SuperCar-container" style="padding: 20px;">
+    <div class="SuperCar-container hidden" style="padding: 20px;">
       <h2 style="color: #1F1A17;">Super Car Incentive</h2>
       <div id="SuperCar" style="display: flex; justify-content: space-between; padding-left: 30px; padding-right: 10px; margin-bottom: 20px;">
           <!-- Left column with the selection criteria -->
@@ -381,8 +410,9 @@
   </div>
   
 
+  <button type="button" class="collapsible">CDI Incentive</button>
 
-      <div class="CDI-section">
+      <div class="CDI-section hidden">
         <h2 style="color: #1F1A17;">CDI scores</h2>
         <label for="inputType" style="color: #1F1A17;">Select Input Type:</label>
         <select id="inputType">
@@ -398,8 +428,9 @@
       </div>
 
 
+      <button type="button" class="collapsible">Discount Incentive</button>
 
-      <div class="discountIncentive-section">
+      <div class="discountIncentive-section hidden">
         <h2 style="color: #1F1A17;">Discount Incentive</h2>
         <button type="button" id="addDiscountInputButton">Add Slab</button>
         <button type="button" id="removeDiscountInput">Remove Slab</button>
@@ -407,8 +438,8 @@
         <div id="DiscountInputsContainer"></div>
       </div>
 
-
-      <div class="MGA-section">
+      <button type="button" class="collapsible">MGA Incentive</button>
+      <div class="MGA-section hidden">
         <h2 style="color: #1F1A17;">MGA Incentive</h2>
         <br>
         <button type="button" id="addMGAInput">Add Input</button>
@@ -419,8 +450,8 @@
       </div>
 
 
-
-      <div class="EW-section">
+      <button type="button" class="collapsible">Extended Warranty Incentive</button>
+      <div class="EW-section hidden">
         <h2 style="color: #1F1A17;">Extended Warranty Incentive</h2>
         <label for="EWinputType">Select Input Type:</label>
         <select id="EWinputType">
@@ -435,7 +466,9 @@
         <div id="EWinputsContainer"></div>
       </div>
 
-      <div class="MSR-section">
+      <button type="button" class="collapsible">MSR AutoCard Incentive</button>
+
+      <div class="MSR-section hidden">
         <h2 style="color: #1F1A17;">MSR Incentive</h2>
         <label for="MSRinputType">Select Input Type:</label>
         <select id="MSRinputType">
@@ -452,7 +485,8 @@
         <div id="MSRinputsContainer"></div>
       </div>
 
-      <div class="ccp-section">
+      <button type="button" class="collapsible">CCP Incentive</button>
+      <div class="ccp-section hidden">
 
         <h2 style="color: #1F1A17;">CCP Incentive</h2>
         <label for="CCPinputType">Select Input Type:</label>
@@ -470,7 +504,8 @@
         <div id="CCPinputsContainer"></div>
       </div>
 
-      <div class="MSSF-section">
+      <button type="button" class="collapsible">MSSF Incentive</button>
+      <div class="MSSF-section hidden">
 
         <h2 style="color: #1F1A17;">MSSF Incentive</h2>
         <label for="MSSFinputType">Select Input Type:</label>
@@ -499,6 +534,31 @@
 
   <table class="oldDSE-table"></table>
   <table class="new-table"></table>
+
+  <script>
+    // JavaScript to handle the collapsible functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      var coll = document.getElementsByClassName("collapsible");
+      for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          
+          content.classList.toggle("hidden");
+
+      //     if (content.classList.contains("hidden")) {
+      //   content.style.maxHeight = null; 
+      // } else {
+      //   content.style.maxHeight = content.scrollHeight + "px"; 
+      // }
+
+
+      });
+
+      }
+    });
+  </script>
+
   <script src="preload.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>

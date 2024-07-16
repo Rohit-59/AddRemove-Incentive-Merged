@@ -484,7 +484,7 @@ ipcMain.on('form-submit', (event, formData) => {
     // Calling Function to Check Qualification and Calculate eacch incentive of DSE
 
     checkQualifingCondition(formData, employeeStatusDataSheet);
-    newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
+    // newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
     qualifiedRM = PerCarFunc(qualifiedRM, formData);
     qualifiedRM = SpecialCarFunc(qualifiedRM, formData);
     qualifiedRM = PerModelCarFunc(qualifiedRM, formData);//TODO
@@ -499,6 +499,33 @@ ipcMain.on('form-submit', (event, formData) => {
     qualifiedRM = ComplaintFunc(qualifiedRM, formData);
     qualifiedRM = MGAfunc(qualifiedRM, MGAdata, formData);
     qualifiedRM = SuperCarFunc(qualifiedRM, MGAdata, salesExcelDataSheet, formData)
+
+
+
+
+
+    newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
+    newRm = PerCarFunc(newRm, formData);
+    newRm = SpecialCarFunc(newRm, formData);
+    newRm = PerModelCarFunc(newRm, formData);//TODO
+    newRm = ModelWiseNumberFunc(qualifiedRM,formData);
+    newRm = CDIfunc(newRm, CDIdata, formData);//TODO
+    newRm = EWfunc(newRm, formData);
+    newRm = CCPfunc(newRm, formData);
+    newRm = MSSFfunc(newRm, formData);
+    newRm = MSRFunc(newRm, formData);
+    newRm = DiscountFunc(newRm, formData);
+    newRm = ExchangeFunc(newRm, formData);
+    newRm = ComplaintFunc(newRm, formData);
+    newRm = MGAfunc(newRm, MGAdata, formData);
+    newRm = SuperCarFunc(newRm, MGAdata, salesExcelDataSheet, formData)
+
+
+
+
+
+
+
    
 
 
@@ -664,6 +691,26 @@ ipcMain.on('form-submit', (event, formData) => {
     newRm.forEach((item) => {
 
 
+      const grandTotal =
+      getIncentiveValue(item, "Total Vehicle Incentive Amt. Slabwise") +
+      getIncentiveValue(item, "CDI Incentive") +
+      getIncentiveValue(item, "EW Incentive") +
+      getIncentiveValue(item, "CCP Incentive") +
+      getIncentiveValue(item, "MSSF Incentive") +
+      getIncentiveValue(item, "MSR Incentive") +
+      getIncentiveValue(item, "Exchange Incentive") +
+      getIncentiveValue(item, "Complaint Deduction") +
+      getIncentiveValue(item, "Super Car Incentive") +
+      getIncentiveValue(item, "MGA Incentive")+
+      getIncentiveValue(item, 'Vehicle Incentive');
+
+
+
+
+
+
+
+
       obj = {
         "DSE ID": item['DSE ID'],
         "DSE Name": item['DSE Name'],
@@ -685,7 +732,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "Special Car Incentive": item['SpecialCar Incentive'],
         "Total Vehicle Incentive": item["Vehicle Incentive"],
         "Super Car Incentive Qualification": getIncentiveValue(item, "Super Car Incentive") ? "YES" : "NO",
-        "Super Car Incentive": 0,
+        "Super Car Incentive": getIncentiveValue(item, "Super Car Incentive"),
         "CDI Score": getIncentiveValue(item, "CDI Score"),//TODO Handle NAN values
         "CDI Incentive": item["CDI Incentive"],
         "Total MGA": (item['TOTAL MGA']) ? item['TOTAL MGA'] : 0,
@@ -717,7 +764,8 @@ ipcMain.on('form-submit', (event, formData) => {
         "MSR Incentive": item["MSR Incentive"],
         "Complaints": item["Complaints"],
         "Complaint Deduction": item["Complaint Deduction"],//TODO
-        "Final Incentive": item["Final Incentive"],
+        // "Final Incentive": item["Final Incentive"],
+        "Final Incentive": parseInt(grandTotal)
 
       }
       finalExcelobjOldDSE.push(obj);
