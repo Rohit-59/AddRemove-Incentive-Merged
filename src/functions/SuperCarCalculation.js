@@ -20,17 +20,17 @@ module.exports = (qualifiedRM, MGADataSheet, salesExcelDataSheet, formData) => {
                     if (!(formData.SpecialCarIncentive.hasOwnProperty(record["Model Name"]))) {
                         //discount check amd update
                         if (formData.superCar.superCarCriteria.includes("zeroDiscountOnVehicle")) {
-                            if (record["FINAL DISCOUNT"] <= formData.superCar.superCarValues.Discount) {
+                            if (parseInt(record["FINAL DISCOUNT"]) <= parseInt(formData.superCar.superCarValues.Discount)) {
                                 mappedObject.zeroDiscountOnVehicle = true;
                             }
                         }
                         // MGA check and update 
                         if (formData.superCar.superCarCriteria.includes("MGASaleGT30K")) {
-                            MGADataSheet.forEach((rec) => {
-                                if (rec["ID"] == userID && parseFloat(rec['MGA/VEH']) >= formData.superCar.superCarValues.MGA) {
+                           
+                                if ( parseInt(record["CASH ACCESSORIES"]) >= parseInt(formData.superCar.superCarValues.MGA)) {
                                     mappedObject.MGASaleGT30K = true;
                                 }
-                            });
+                            
                         }
                         //EW check amd update
                         if (formData.superCar.superCarCriteria.includes("royalPlatinum")) {
