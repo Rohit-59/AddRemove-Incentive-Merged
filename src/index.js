@@ -504,21 +504,21 @@ ipcMain.on('form-submit', (event, formData) => {
 
 
 
-    newDSEIncentiveDataSheet = NewDSEincentiveCalculation(newRm, formData)
-    newRm = PerCarFunc(newRm, formData);
-    newRm = SpecialCarFunc(newRm, formData);
-    newRm = PerModelCarFunc(newRm, formData);//TODO
-    newRm = ModelWiseNumberFunc(qualifiedRM,formData);
-    newRm = CDIfunc(newRm, CDIdata, formData);//TODO
-    newRm = EWfunc(newRm, formData);
-    newRm = CCPfunc(newRm, formData);
-    newRm = MSSFfunc(newRm, formData);
-    newRm = MSRFunc(newRm, formData);
-    newRm = DiscountFunc(newRm, formData);
-    newRm = ExchangeFunc(newRm, formData);
-    newRm = ComplaintFunc(newRm, formData);
-    newRm = MGAfunc(newRm, MGAdata, formData);
-    newRm = SuperCarFunc(newRm, MGAdata, salesExcelDataSheet, formData)
+    newRm = NewDSEincentiveCalculation(newRm, formData)
+    // newRm = PerCarFunc(newRm, formData);
+    // newRm = SpecialCarFunc(newRm, formData);
+    // newRm = PerModelCarFunc(newRm, formData);//TODO
+    // newRm = ModelWiseNumberFunc(qualifiedRM,formData);
+    // newRm = CDIfunc(newRm, CDIdata, formData);//TODO
+    // newRm = EWfunc(newRm, formData);
+    // newRm = CCPfunc(newRm, formData);
+    // newRm = MSSFfunc(newRm, formData);
+    // newRm = MSRFunc(newRm, formData);
+    // newRm = DiscountFunc(newRm, formData);
+    // newRm = ExchangeFunc(newRm, formData);
+    // newRm = ComplaintFunc(newRm, formData);
+    // newRm = MGAfunc(newRm, MGAdata, formData);
+    // newRm = SuperCarFunc(newRm, MGAdata, salesExcelDataSheet, formData)
 
 
 
@@ -611,7 +611,7 @@ ipcMain.on('form-submit', (event, formData) => {
         "MSR Incentive": item["MSR Incentive"],
         "Complaints": item["Complaints"],
         "Complaint Deduction": item["Complaint Deduction"],//TODO
-        "Final Incentive": Math.round(grandTotal),
+        "Final Incentive": Math.round(grandTotal) > 0 ? Math.round(grandTotal):0,
 
       }
       finalExcelobjOldDSE.push(obj);
@@ -691,18 +691,18 @@ ipcMain.on('form-submit', (event, formData) => {
     newRm.forEach((item) => {
 
 
-      const grandTotal =
-      getIncentiveValue(item, "Total Vehicle Incentive Amt. Slabwise") +
-      getIncentiveValue(item, "CDI Incentive") +
-      getIncentiveValue(item, "EW Incentive") +
-      getIncentiveValue(item, "CCP Incentive") +
-      getIncentiveValue(item, "MSSF Incentive") +
-      getIncentiveValue(item, "MSR Incentive") +
-      getIncentiveValue(item, "Exchange Incentive") +
-      getIncentiveValue(item, "Complaint Deduction") +
-      getIncentiveValue(item, "Super Car Incentive") +
-      getIncentiveValue(item, "MGA Incentive")+
-      getIncentiveValue(item, 'Vehicle Incentive');
+      // const grandTotal =
+      // getIncentiveValue(item, "Total Vehicle Incentive Amt. Slabwise") +
+      // getIncentiveValue(item, "CDI Incentive") +
+      // getIncentiveValue(item, "EW Incentive") +
+      // getIncentiveValue(item, "CCP Incentive") +
+      // getIncentiveValue(item, "MSSF Incentive") +
+      // getIncentiveValue(item, "MSR Incentive") +
+      // getIncentiveValue(item, "Exchange Incentive") +
+      // getIncentiveValue(item, "Complaint Deduction") +
+      // getIncentiveValue(item, "Super Car Incentive") +
+      // getIncentiveValue(item, "MGA Incentive")+
+      // getIncentiveValue(item, 'Vehicle Incentive');
 
 
 
@@ -764,8 +764,8 @@ ipcMain.on('form-submit', (event, formData) => {
         "MSR Incentive": item["MSR Incentive"],
         "Complaints": item["Complaints"],
         "Complaint Deduction": item["Complaint Deduction"],//TODO
-        // "Final Incentive": item["Final Incentive"],
-        "Final Incentive": parseInt(grandTotal)
+        "Final Incentive": item["Final Incentive"],
+        // "Final Incentive": parseInt(grandTotal)
 
       }
       finalExcelobjOldDSE.push(obj);

@@ -476,34 +476,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // For Model Wise Progressive Pair
 
-    const addProgressivePairButton = document.getElementById('addProgressivePairButton');
-    addProgressivePairButton.addEventListener('click', () => {
+    // const addProgressivePairButton = document.getElementById('addProgressivePairButton');
+    // addProgressivePairButton.addEventListener('click', () => {
 
-        const pairContainer = document.getElementById('Progressive-pairs-container');
-        const div = document.createElement('div');
-        div.className = 'Progressive-pair-container';
+    //     const pairContainer = document.getElementById('Progressive-pairs-container');
+    //     const div = document.createElement('div');
+    //     div.className = 'Progressive-pair-container';
 
-        div.innerHTML = `
-        <label for="vehiclePNumber">Car Number:</label>
-        <input type="number" name="vehiclePNumber">
-        <label for="incentive">Incentive:</label>
-        <input type="number" name="incentive" step="any">
-    `;
-    pairContainer.appendChild(div);
+    //     div.innerHTML = `
+    //     <label for="vehiclePNumber">Car Number:</label>
+    //     <input type="number" name="vehiclePNumber">
+    //     <label for="incentive">Incentive:</label>
+    //     <input type="number" name="incentive" step="any">
+    // `;
+    // pairContainer.appendChild(div);
 
-    })
+    // })
 
-    const removeProgressivePairButton = document.getElementById('removeProgressivePairButton');
-    removeProgressivePairButton.addEventListener('click',()=>{
+    // const removeProgressivePairButton = document.getElementById('removeProgressivePairButton');
+    // removeProgressivePairButton.addEventListener('click',()=>{
        
-        var container = document.getElementById('Progressive-pairs-container');
-    var lastChild = container.lastElementChild;
-    if (lastChild) {
-        container.removeChild(lastChild);
-    }
+    //     var container = document.getElementById('Progressive-pairs-container');
+    // var lastChild = container.lastElementChild;
+    // if (lastChild) {
+    //     container.removeChild(lastChild);
+    // }
 
 
-    })
+    // })
 
 
 
@@ -868,20 +868,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        const ProgressivepairContainers = document.getElementsByClassName('Progressive-pair-container');
-        for (let i = 0; i < ProgressivepairContainers.length; i++) {
-            const ProgressivepairContainer = ProgressivepairContainers[i];
-            const NumberInput = ProgressivepairContainer.querySelector('input[name="vehiclePNumber"]');
-            const incentiveInput = ProgressivepairContainer.querySelector('input[name="incentive"]');
+        // const ProgressivepairContainers = document.getElementsByClassName('Progressive-pair-container');
+        // for (let i = 0; i < ProgressivepairContainers.length; i++) {
+        //     const ProgressivepairContainer = ProgressivepairContainers[i];
+        //     const NumberInput = ProgressivepairContainer.querySelector('input[name="vehiclePNumber"]');
+        //     const incentiveInput = ProgressivepairContainer.querySelector('input[name="incentive"]');
 
 
-            const NumberPair = {
-                VehicleNumber: NumberInput.value,
-                incentive: incentiveInput.value
-            };
+        //     const NumberPair = {
+        //         VehicleNumber: NumberInput.value,
+        //         incentive: incentiveInput.value
+        //     };
 
-            perModelProgressivePairs.push(NumberPair);
-        }
+        //     perModelProgressivePairs.push(NumberPair);
+        // }
 
 
 
@@ -1083,7 +1083,7 @@ document.addEventListener("DOMContentLoaded", function () {
         finalObj["Extended Warranty"] = EWInputs;
         finalObj["PerModelIncentive"] = perModelCarPairs;
         finalObj["PerModelNumberCarIncentive"] = NumberPairs;
-        finalObj["ProgressivePerModelInputs"] = perModelProgressivePairs;
+        // finalObj["ProgressivePerModelInputs"] = perModelProgressivePairs;
         finalObj["SpecialCarIncentive"] = specialCarPairs;
         finalObj["CCP"] = CCPInputs;
         finalObj["MSSF"] = MSSFInputs;
