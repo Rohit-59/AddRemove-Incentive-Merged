@@ -18,7 +18,31 @@ let perModelProgressivePairs = [];
 
 
 
+// ipcRenderer.on('scroll-to-top', () => {
+//     closeAllCollapsibleSections();
+//     scrollToTop();
+// });
 
+function closeAllCollapsibleSections() {
+    const collapsibleSections = document.querySelectorAll('.collapsible');
+    collapsibleSections.forEach(section => {
+        if (section.classList.contains('active')) {
+            section.classList.remove('active');
+            const content = section.nextElementSibling;
+            if (content) {
+                content.classList.toggle("hidden");
+                // content.style.maxHeight = null;
+            }
+        }
+    });
+}
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Use 'auto' for instant scrolling
+    });
+}
 
 const addEWInputFields = (type, EWinputsContainer) => {
     let inputFields;
@@ -243,8 +267,12 @@ const addMGAInputFields = (MGAinputsContainer) => {
 };
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
+
+scrollToTop();
+
+
+
     const fileSelectorSalesExcel = document.querySelector("#file-input-salesExcel");
     fileSelectorSalesExcel.addEventListener("change", (e) => {
         const filePath = e.target.files[0].path;
@@ -253,19 +281,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    const resetButton = document.getElementById('resetButton');
-
-    resetButton.addEventListener('click', () => {
-        ipcRenderer.send('reset-app');
-    });
-
-
     const fileSelectorCDIScore = document.querySelector("#file-input-CDIScore");
     fileSelectorCDIScore.addEventListener("change", (e) => {
         const filePath = e.target.files[0].path;
         ipcRenderer.send("file-selected-CDIScore", filePath);
         // console.log(filePath);
     });
+  
+
+    const resetButton = document.getElementById('resetButton');
+
+    resetButton.addEventListener('click', () => {
+        ipcRenderer.send('reset-app');
+        closeAllCollapsibleSections();
+    });
+
+
+    const resetButton2 = document.getElementById('resetButton2');
+
+    resetButton2.addEventListener('click', () => {
+        ipcRenderer.send('reset-app');
+        closeAllCollapsibleSections();
+    });
+
+
+  
     const form = document.getElementById('myForm');
 
 
@@ -755,10 +795,104 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('sectionSelect').dispatchEvent(new Event('change'));
 
 
+    function validateCheckboxes() {
+        console.log("validateCheckboxes");
+        let checkboxes = document.querySelectorAll(
+          '.carsFMInput'
+        );
+        let isChecked = false;
+        checkboxes.forEach(function (checkbox) {
+          if (checkbox.checked) {
+            isChecked = true;
+            return;
+          }
+        });
+        return isChecked;
+      }
+    
+      function validatenumCars() {
+        console.log("validatenumCars");
+        let numCarsValidation = document.querySelector("#numCars");
+        const valueNumCars = numCarsValidation.value.trim();
+        let validatenumCarsCheck = false;
+        // Validate if valueNumCars is not empty
+        if (valueNumCars !== "") {
+          // Check if valueNumCars is a valid number (not NaN)
+          if (!isNaN(valueNumCars)) {
+            validatenumCarsCheck = true;
+          } else {
+            console.log("Please enter a valid number for numCars.");
+          }
+        } else {
+          console.log("Please enter a value for numCars.");
+        }
+        return validatenumCarsCheck;
+      }
+    
+      function validateFileInput() {
+        let fileInput = document.getElementById("file-input-salesExcel");
+        let file = fileInput.files[0];
+        let checkFile = true;
+        if (!file) {
+          checkFile = false;
+        }
+        return checkFile;
+      }
+    
+      function validateFileInputFile2() {
+        let fileInput = document.getElementById("file-input-CDIScore");
+        // let file = ;
+        let checkFile = true; 
+        if (!fileInput.files[0]) {
+          checkFile = false;
+        }
+        return checkFile;
+      }
 
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+
+
+        let isValidate = true;
+
+        if (!validateCheckboxes()) {
+          const checkboxerror = document.querySelector("#checkboxError");
+          checkboxerror.innerHTML = "<strong> Above field is required </strong>";
+          scrollToTop();
+        }
+    
+        if (!validatenumCars()) {
+          isValidate = false;
+          const numCarserror = document.querySelector("#numCarsError");
+          numCarserror.innerHTML = "<strong> Above field is required </strong>";
+          scrollToTop();
+        }
+    
+        if (!validateFileInput()) {
+          isValidate = false;
+          const fileinputsalesExcelError = document.querySelector(
+            "#file-input-salesExcelError"
+          );
+          fileinputsalesExcelError.innerHTML =
+            "<strong> Above field is required </strong>";
+          scrollToTop();
+        }
+    
+        if (!validateFileInputFile2()) {
+          isValidate = false;
+          const fileinputCDIExcelError = document.querySelector(
+            "#file-input-CDIExcelError"
+          );
+          fileinputCDIExcelError.innerHTML =
+            "<strong> Above field is required </strong>";
+          scrollToTop();
+        }
+
+
+
+
+
 
         let AC = document.getElementById('autocard');
         let eW = document.getElementById('ew');
@@ -1103,6 +1237,10 @@ document.addEventListener("DOMContentLoaded", function () {
         //     // Display the error message
         //     errorHeadSales.innerHTML = "<strong>Error in Challan Excel Format<br> Click Reset button before calculating again.</strong>"; 
 
+        errorHeadSales.innerHTML =
+    "<div><strong>Or You uploaded the wrong excel</strong></div><br> ";
+
+
         //     // Clear previous errors
         //     salesError.innerHTML = '';
 
@@ -1118,12 +1256,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     ipcRenderer.on("formateAlertSalesExcel", (event, data) => {
-        // console.log(data); // Log the actual data received
-
-        // <div class="errormsg" id="errormsgSales">
-        //     <h3 class="errorHead" id="errorHeadSales"></h3>
-        //     <ul class="ErrorList" id="salesError"></ul>
-        // </div>
+     
 
         const errormsgSales = document.querySelector("#errormsgSales");
         const errorHeadSales = document.querySelector("#errorHeadSales");
@@ -1132,98 +1265,116 @@ document.addEventListener("DOMContentLoaded", function () {
         errormsgSales.style.display = "block";
 
         // Display the error message
-        errorHeadSales.innerHTML = "<div><strong>Error in Sales Excel Format</strong></div><br> <div><strong>Click Reset button before calculating again.</strong></div>";
+            // Display the error message
+    errorHeadSales.innerHTML =
+    "<div><strong>Error in Sales Excel Format</strong></div><br> ";
+
+    errorHeadSales.innerHTML +=
+    "<div><strong>Or You uploaded the wrong excel</strong></div><br> ";
+
 
         // Clear previous errors
         salesError.innerHTML = '';
 
         // Add each error to the error list
-        data.forEach(attr => {
-            const li = document.createElement('li');
-            li.innerText = attr;
+        data.forEach((attr) => {
+            const li = document.createElement("li");
+            li.innerText = `Error in "${attr}" column heading`;
             salesError.appendChild(li);
-        });
+          });
+      
+          const resetbtn = document.querySelector("#errorresetButton");
+          resetbtn.innerHTML =
+            "<div><strong>Click Reset button before calculating again.</strong></div>";
     });
 
 
     ipcRenderer.on("formateAlertMGAExcel", (event, data) => {
-        // console.log("data");
-        // console.log(data);
 
-        //   <div class="errormsg" id="errormsgMGA">
-        //      <h3 class="errorHead" id="errorHeadMGA"></h3>
-        //      <ul class="ErrorList" id="MGAError"></ul>
-        //  </div>
-        // console.log(data); // Log the actual data received
         const errormsg = document.querySelector("#errormsgMGA");
         const errorHeadMGA = document.querySelector("#errorHeadMGA");
         const MGAError = document.querySelector("#MGAError");
+    
+        const resetbtn = document.querySelector("#errorresetButton");
+        resetbtn.innerHTML =
+          "<div><strong>Click Reset button before calculating again.</strong></div>";
+    
         // Display the error message
         errormsg.style.display = "block";
-        errorHeadMGA.innerHTML = "<div><strong>Error in MGA Excel Format</strong></div><br> <div><strong>Click Reset button before calculating again.</strong></div>";
+        errorHeadMGA.innerHTML =
+          "<div><strong>Error in MGA Excel Format</strong></div>";
 
+          errorHeadMGA.innerHTML+=
+    "<div><strong>Or You uploaded the wrong excel</strong></div><br> ";
+
+    
         // Clear previous errors
-        MGAError.innerHTML = '';
-
+        MGAError.innerHTML = "";
+    
         // Add each error to the error list
-        data.forEach(attr => {
-            const li = document.createElement('li');
-            li.innerText = attr;
-            MGAError.appendChild(li);
+        data.forEach((attr) => {
+          const li = document.createElement("li");
+          li.innerText = `Error in "${attr}" column heading`;
+          MGAError.appendChild(li);
         });
-    });
+      });
 
-    ipcRenderer.on("formateAlertStatusExcel", (event, data) => {
-        // console.log("data");
-        // console.log(data);
-        //   <div class="errormsg" id="errormsgStatus">
-        //   <h3 class="errorHead" id="errorHeadStatus"></h3>
-        //   <ul class="ErrorList" id="StatusError"></ul>
-        // </div>
-        // console.log(data); // Log the actual data received
+      ipcRenderer.on("formateAlertStatusExcel", (event, data) => {
+   
         const errormsg = document.querySelector("#errormsgStatus");
         const errorHeadStatus = document.querySelector("#errorHeadStatus");
         const StatusError = document.querySelector("#StatusError");
+    
+        const resetbtn = document.querySelector("#errorresetButton");
+        resetbtn.innerHTML =
+          "<div><strong>Click Reset button before calculating again.</strong></div>";
+    
         // Display the error message
         errormsg.style.display = "block";
-        errorHeadStatus.innerHTML = "<div><strong>Error in DSE Status Excel Format</strong></div><br> <div><strong>Click Reset button before calculating again.</strong></div>";
+        errorHeadStatus.innerHTML =
+          "<div><strong>Error in DSE Status Excel Format</strong></div>";
 
+          errorHeadStatus.innerHTML +=
+    "<div><strong>Or You uploaded the wrong excel</strong></div><br> ";
+
+    
         // Clear previous errors
-        StatusError.innerHTML = '';
-
+        StatusError.innerHTML = "";
+    
         // Add each error to the error list
-        data.forEach(attr => {
-            const li = document.createElement('li');
-            li.innerText = attr;
-            StatusError.appendChild(li);
+        data.forEach((attr) => {
+          const li = document.createElement("li");
+          li.innerText = `Error in "${attr}" column heading`;
+          StatusError.appendChild(li);
         });
-    });
+      });
 
-    ipcRenderer.on("formateAlertCDIExcel", (event, data) => {
-        // console.log("data");
-        // console.log(data);// Log the actual data received
-        //   <div class="errormsg" id="errormsgCDI">
-        //     <h3 class="errorHead" id="errorHeadCDI"></h3>
-        //     <ul class="ErrorList" id="CDIError"></ul>
-        //   </div>
-
+      ipcRenderer.on("formateAlertCDIExcel", (event, data) => {
         const errormsg = document.querySelector("#errormsgCDI");
         const errorHeadStatus = document.querySelector("#errorHeadCDI");
         const StatusError = document.querySelector("#CDIError");
+        const resetbtn = document.querySelector("#errorresetButton");
+        resetbtn.innerHTML =
+          "<div><strong>Click Reset button before calculating again.</strong></div>";
         errormsg.style.display = "block";
         // Display the error message
-        errorHeadStatus.innerHTML = "<div><strong>Error in CDI Score Excel Format</strong></div><br> <div><strong>Click Reset button before calculating again.</strong></div>";
+        errorHeadStatus.innerHTML =
+          "<div><strong>Error in CDI Score Excel Format</strong></div>";
+
+          errorHeadStatus.innerHTML +=
+    "<div><strong>Or You uploaded the wrong excel</strong></div><br> ";
 
         // Clear previous errors
-        StatusError.innerHTML = '';
-
+        StatusError.innerHTML = "";
+    
         // Add each error to the error list
-        data.forEach(attr => {
-            const li = document.createElement('li');
-            li.innerText = attr;
-            StatusError.appendChild(li);
+        data.forEach((attr) => {
+          const li = document.createElement("li");
+          li.innerText = `Error in "${attr}" column heading`;
+          StatusError.appendChild(li);
         });
-    });
+      });
+    
 
 
     function populateTable(data, className) {

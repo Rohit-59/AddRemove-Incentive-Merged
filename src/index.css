@@ -6,20 +6,25 @@
 body {
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
   color: #fff;
-  background: #da8a5f;
+  /* background: #da8a5f; */
+  /* background: #FFFAE6; */
+  background-image: linear-gradient( 103.3deg,  rgba(252,225,208,1) 30%, rgba(255,173,214,1) 55.7%, rgb(200, 212, 245) 89.8% );
 }
 
 
 
 .container {
-  width: 65%;
+  width: 73%;
   margin: 0 auto;
   padding: 20px;
+  /* background-color: #e5e2e4; */
   background-color: #FFFFFF;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 0.5px solid #595050;
+  border-radius: 5px;
 }
 
 h1,
@@ -368,6 +373,10 @@ td {
 ul{
   list-style-type: none;
 }
+ul.ErrorList {
+  list-style-type: none; /* Remove default list styles */
+  padding-left: 0; /* Remove default padding */
+}
 
 ul.ErrorList li {
   font-size: 1em; /* Standard font size for list items */
@@ -379,11 +388,13 @@ ul.ErrorList li {
 }
 
 ul.ErrorList li::before {
-  content: '⚠️'; /* Custom warning icon */
+  content: '⚠️ '; /* Custom warning icon */
   color: #d00; /* Dark red color for icon */
   position: absolute; /* Position icon absolutely */
   left: 0; /* Align icon to the left */
-  top: 0; /* Align icon to the top */
+  /* top: 0; Align icon to the top */
+  top: 50%; /* Align icon vertically centered */
+  transform: translateY(-50%); /* Adjust for vertical centering */
   font-size: 1em; /* Font size for icon */
   margin-right: 10px; /* Space between icon and text */
 }

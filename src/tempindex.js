@@ -22,11 +22,8 @@ const createWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-
   ipcMain.on('reset-application', () => {
     mainWindow.reload();
-  
-    
   });
   mainWindow.once('ready-to-show', () => {
     mainWindow.maximize()
@@ -35,18 +32,13 @@ const createWindow = () => {
   ipcMain.on('reset-app', () => {
     if (mainWindow) {
       KeyMissing = false;
-      
       mainWindow.reload();
-   
-     
     }
   });
 
   mainWindow.loadFile(path.join(__dirname, "index.html"));
   // mainWindow.webContents.openDevTools();
 };
-
-
 
 //Separate Calculation Functions for Each type incentive
 const MGAfunc = require('./functions/MGACalculation');
@@ -75,20 +67,17 @@ let nonQualifiedRM = [];
 let newRm = [];
 let newDSEIncentiveDataSheet = [];
 let KeyMissing = false;
-let path1;
-let path2;
+
 // Function to check if the Key value of CDI/MGA and DSE Excel data is in correct form or not
 function checkKeys(array, keys) {
   const firstObject = array[0];
   const missingKeys = [];
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    if(firstObject){
     if (!firstObject.hasOwnProperty(key)) {
       missingKeys.push(key);
     }
   }
-}
   return missingKeys.length > 0 ? missingKeys : null;
 }
 
@@ -486,8 +475,6 @@ function getIncentiveValue(item, key) {
 ipcMain.on('form-submit', (event, formData) => {
 
   // console.log("Form Data Input", formData);
-
-  if(formData.QC.numOfCars !== "" && formData.QC.focusModel.length !== 0){
   if (!KeyMissing) {
 
     console.log("formData", formData);
@@ -807,7 +794,7 @@ ipcMain.on('form-submit', (event, formData) => {
     newRm = [];
     finalExcelobjOldDSE = []
   }
-}
+
 });
 
 const creatExcel = (dataForExcelObj, text) => {
@@ -822,25 +809,21 @@ const creatExcel = (dataForExcelObj, text) => {
   const newSheet = XLSX.utils.json_to_sheet(dataForExcelObj);
   XLSX.utils.book_append_sheet(newWorkbook, newSheet, "Sheet1");
 
-  const fileName = `calculatedIncentive_${text}_${date}-${month}-${year}_${time}.xlsx`;
+  const fileName = calculatedIncentive_${text}_${date}-${month}-${year}_${time}.xlsx;
   const folderPath = "./DataSheets";
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath);
-    // console.log(`Directory ${folderPath} created.`);
+    // console.log(Directory ${folderPath} created.);
   } else {
-    // console.log(`Directory ${folderPath} already exists.`);
+    // console.log(Directory ${folderPath} already exists.);
   }
-  XLSX.writeFile(newWorkbook, `./DataSheets/${fileName}`);
+  XLSX.writeFile(newWorkbook, ./DataSheets/${fileName});
 
 }
 
 ipcMain.on('file-selected-salesExcel', (event, path) => {
 
-
-path1 = path;
-  
   //sales datasheet
-  if(path){
   const workbook = XLSX.readFile(path);
   const salesSheetName = workbook.SheetNames[0];
   const salesSheet = workbook.Sheets[salesSheetName];
@@ -848,7 +831,7 @@ path1 = path;
   salesSheetData = transformKeys(salesSheetData);
   salesSheetData = trimValuesArray(salesSheetData);
 
-  const keysToCheckInsalesexcel = ["Model Name", "DSE ID", "DSE Name", "BM AND TL NAME", "Insurance", "Extended Warranty","CASH ACCESSORIES", "Autocard", "CCP PLUS", "FINAL DISCOUNT"
+  const keysToCheckInsalesexcel = ["Model Name", "DSE ID", "DSE Name", "BM AND TL NAME", "Insurance", "Extended Warranty", "Autocard", "CCP PLUS", "FINAL DISCOUNT"
   ];
 
   const missingKeyForSalesExcel = checkKeys(salesSheetData, keysToCheckInsalesexcel);
@@ -930,7 +913,7 @@ path1 = path;
     KeyMissing = true;
     event.reply("formateAlertStatusExcel", missingKeyForStatusExcel);
   }
-}
+
 
   // console.log("Object inside array employeeStatus", JSON.stringify(employeeStatusDataSheet));
 
@@ -939,9 +922,6 @@ path1 = path;
 
 ipcMain.on('file-selected-CDIScore', (event, path) => {
 
-path2 = path;
-  if (path) {
-  
   const workbook = XLSX.readFile(path);
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
@@ -952,22 +932,19 @@ path2 = path;
   const keysToCheckInCDIexcel = ["DSE ID", "DSE", "CDI"];
 
   const missingKeyForCDIExcel = checkKeys(CDIdata, keysToCheckInCDIexcel);
-  // console.log("missingKeyForCDIExcel")
-  // console.log(missingKeyForCDIExcel)
+  
   if (missingKeyForCDIExcel) {
     KeyMissing = true;
     event.reply("formateAlertCDIExcel", missingKeyForCDIExcel);
   }
 
-   }
-  // console.log("Object inside array CDI Score", CDIdata);
+
 });
 
 
 
 app.whenReady().then(() => {
   createWindow();
-
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

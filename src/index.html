@@ -12,9 +12,11 @@
 
 <body>
   &nbsp;&nbsp;&nbsp;
-  <h1 style="text-align: center;color: #0e0a04;">Maruti</h1>
+  <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+  <img style="text-align: center;" src="./assets/NimarMotor.png" alt="logo" />
+  <h1 style="text-align: center;color: #0e0a04;">Nimar Motors</h1>
   <h1 style="text-align: center;color: #0e0a04;"> Incentive Calculator </h1>
-  
+</div>
   
   <div class="errormsg" id="errormsgSales">
     <h3 class="errorHead" id="errorHeadSales"></h3>
@@ -36,50 +38,82 @@
     <h3 class="errorHead" id="errorHeadCDI"></h3>
     <ul class="ErrorList" id="CDIError"></ul>
   </div>
+
+  <div style="display: flex; margin: 8px;">
+    <span
+      id="errorresetButton"
+      style="color: #FFFFFF; font-weight: bolder; margin: auto; filter: drop-shadow(2px 4px 6px black);" 
+    ></span>
+  </div>
+
+  <br>
+  
   
   <div class="container" style="text-align: center;">
 
+  
+
     <div class="inputFile-section">
+
       <h4 style="text-align: center;color: #1F1A17;">Choose Your file to upload.</h4>
-      <div class="file-input-container-1">
+      <div class="file-input-container-1" style="margin-bottom: 5px;">
         <h4 style="text-align: center;color: #1F1A17;">Sales Excel</h4>
-        <input class="balloon" type="file" name="file" id="file-input-salesExcel" />
+        <input class="balloon" type="file" name="file" id="file-input-salesExcel" required/>
       </div>
-      <div class="file-input-container-2">
+      <span id="file-input-salesExcelError" style="color: red; display: inline;"></span>
+
+
+
+
+      <div class="file-input-container-2" style="margin-bottom: 5px;">
         <h4 style="text-align: center;color: #1F1A17;">CDI Score excel</h4>
         <input class="balloon" type="file" name="file" id="file-input-CDIScore" />
       </div>
+      <span id="file-input-CDIExcelError" style="color: red; display: inline;"></span>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <button type="button" id="resetButton2">Reset</button>
+      </div>
+
+
     </div>
     <form id="myForm">
       <!-- check qualifing Condition -->
-      <button type="button" class="collapsible">Qualifying Condition</button>
-      <div class="qcContainer hidden">
+      <!-- <button type="button" class="collapsible">Qualifying Condition</button> -->
+      <div class="qcContainer">
         <h2 style="color: #1F1A17;">Qualifying Condition</h2>
+
         <div id="qcInputs" style="display: flex; padding: 20px; flex-direction: column; margin-bottom: 20px;">
-          <div class="QCInput" style=" display: flex;   justify-content: space-evenly;">
-            <label for="carSelection" style="color: #1F1A17;">Select Focus Model Cars:</label>
-            <div id="carSelection">
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="ALTO"> ALTO</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="ALTO K-10">ALTO K-10</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="S-Presso"> S-Presso</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="CELERIO"> CELERIO</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="WagonR"> WagonR</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="BREZZA"> BREZZA</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="DZIRE"> DZIRE</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="EECO"> EECO</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="Ertiga"> Ertiga</label>
-              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" value="SWIFT"> SWIFT</label>
+
+          <div class="QCInput" style="display: flex; justify-content: center; margin-bottom: 12px; margin-top: 10px;">
+            <label for="carSelection" style="color: #1F1A17;">Select Focus Model Cars:<span style="color: red; font-weight: bolder"
+              >*</span></label>
+            <div id="carSelection required" >
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="ALTO"> ALTO</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="ALTO K-10"> ALTO K-10</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="S-Presso"> S-Presso</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="CELERIO"> CELERIO</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="WagonR"> WagonR</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="BREZZA"> BREZZA</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="DZIRE"> DZIRE</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="EECO"> EECO</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="Ertiga"> Ertiga</label>
+              <label style="color: #1F1A17;"><input type="checkbox" name="carsFM" class="carsFMInput" value="SWIFT"> SWIFT</label>
             </div>
           </div>
+          <span id="checkboxError" style="color: red; display: inline"></span>
 
-          <div class="QCInput" style=" display: flex;  justify-content: space-between;">
-            <label for="numCars" style="color: #1F1A17;">Number of Cars:</label>
-            <input type="number" id="numCars" name="numCars">
+
+
+          <div class="QCInput" style=" display: flex;  justify-content: space-between; margin-bottom: 12px; margin-top: 7px;">
+            <label for="numCars" style="color: #1F1A17;">Number of Cars:<span style="color: red; font-weight: bolder"
+              >*</span></label>
+            <input type="number" id="numCars" name="numCars" min="0" max="99">
           </div>
+          <span id="numCarsError" style="color: red; display: inline"></span>
 
      
      
-          <div class="QCInput" style=" display: flex; align-items: center;  justify-content: space-between;">
+          <div class="QCInput" style=" display: flex; align-items: center; margin-top: 5px; justify-content: space-between;">
             <label for="autocard" style="color: #1F1A17;">AutoCard:</label>
             <input type="checkbox" id="autocard" name="autocard" value="yes" onchange="
             var divToToggle = document.getElementById('autoValue');
@@ -525,7 +559,7 @@
 
 
       <br>
-      <button id="resetButton">Reset</button>
+      <button type="button" id="resetButton">Reset</button>
       <button type="submit">Submit</button>
       <!-- <button class="reset-button">Reset</button> -->
     </form>
@@ -538,6 +572,34 @@
   <script>
     // JavaScript to handle the collapsible functionality
     document.addEventListener('DOMContentLoaded', function() {
+
+
+
+      document.getElementById('numCars').addEventListener('input', function() {
+  const inputField = document.getElementById('numCars');
+  let value = inputField.value;
+
+  
+  value = value.replace(/\D/g, '');
+
+  // Check if the value is out of range and adjust if necessary
+  if (value !== '' && (value < 0 || value > 99)) {
+    if (value < 0) {
+      value = 0;
+    } else if (value > 99) {
+      value = 99;
+    }
+  }
+
+  inputField.value = value;
+});
+
+
+
+
+
+
+
       var coll = document.getElementsByClassName("collapsible");
       for (var i = 0; i < coll.length; i++) {
         coll[i].addEventListener("click", function() {
